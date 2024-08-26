@@ -5,6 +5,7 @@
     </template>
 
     <template #content>
+      <SidebarMenu />
       <RouterView />
     </template>
 
@@ -14,5 +15,6 @@
 
 <script setup>
   import AppDefaultLayout from '@/shared/ui/layouts/AppDefaultLayout.vue'
-  import HeaderMenu from '@/widgets/header-menu';
+  import HeaderMenu from '@/widgets/header-menu'
+  import SidebarMenu from '@/widgets/sidebar-menu'
 </script>

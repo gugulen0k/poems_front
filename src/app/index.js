@@ -14,7 +14,7 @@ const app = createApp(App)
     theme: {
       preset: NoirAura,
       options: {
-        darkModeSelector: '.theme-switcher',
+        darkModeSelector: '.dark-theme-enabled',
         cssLayer: {
           name: 'primevue',
           order: 'tailwind-base, primevue, tailwind-utilities',

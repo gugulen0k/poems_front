@@ -37,17 +37,17 @@
     {
       label: 'Poems',
       icon: 'pi pi-book',
-      route: '/poems'
+      route: '/poems',
     },
     {
       label: 'Authors',
       icon: 'pi pi-users',
-      route: '/authors'
+      route: '/authors',
     },
   ])
 
   function toggleColorScheme() {
     const element = document.querySelector('html')
-    element.classList.toggle('theme-switcher')
+    element.classList.toggle('dark-theme-enabled')
   }
 </script>

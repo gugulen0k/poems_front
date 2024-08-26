@@ -11,6 +11,18 @@
 
 @import 'primeicons/primeicons.css';
 
+:root {
+  --surface-ground: var(--p-slate-100);
+}
+
+:root[class*='dark-theme-enabled'] {
+  --surface-ground: var(--p-zinc-950);
+}
+
 html {
   font-size: 14px;
+}
+
+body {
+  background: var(--surface-ground);
 }

@@ -17,7 +17,10 @@ export default [
   {
     files: ['**/*.{js,mjs,cjs,vue}'],
     languageOptions: {
-      globals: globals.browser,
+      globals: {
+        require: true,
+        ...globals.browser,
+      },
     },
   },
   {
