@@ -5,11 +5,12 @@
     </template>
 
     <template #content>
-      <SidebarMenu />
       <RouterView />
     </template>
 
-    <template #footer> </template>
+    <template #sidebar>
+      <SidebarMenu />
+    </template>
   </AppDefaultLayout>
 </template>
 
@@ -18,3 +19,5 @@
   import HeaderMenu from '@/widgets/header-menu'
   import SidebarMenu from '@/widgets/sidebar-menu'
 </script>
+
+<style lang="scss"></style>
