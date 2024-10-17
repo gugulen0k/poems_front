@@ -1,5 +1,5 @@
 <template>
-  <aside class="h-full overflow-hidden m-4 flex flex-col gap-8">
+  <aside class="h-full overflow-hidden m-2 flex flex-col gap-8">
     <Button
       class="transition-all"
       :icon="isExpanded ? 'pi pi-arrow-left' : 'pi pi-arrow-right'"
