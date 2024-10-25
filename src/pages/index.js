@@ -9,4 +9,9 @@ export const routes = [
     component: () => import('./poems'),
     name: 'Poems',
   },
+  {
+    path: '/authors',
+    component: () => import('./authors'),
+    name: 'Authors',
+  },
 ]
