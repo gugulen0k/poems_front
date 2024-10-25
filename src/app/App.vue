@@ -7,17 +7,24 @@
     <template #content>
       <RouterView />
     </template>
-
-    <template #sidebar>
-      <SidebarMenu />
-    </template>
   </AppDefaultLayout>
+
+  <VueQueryDevtools />
 </template>
 
 <script setup>
   import AppDefaultLayout from '@/shared/ui/layouts/AppDefaultLayout.vue'
   import HeaderMenu from '@/widgets/header-menu'
-  import SidebarMenu from '@/widgets/sidebar-menu'
+  import { VueQueryDevtools } from '@tanstack/vue-query-devtools'
 </script>
 
-<style lang="scss"></style>
+<style lang="css">
+  html,
+  body {
+    height: 100%;
+  }
+
+  #app {
+    min-height: 100%;
+  }
+</style>

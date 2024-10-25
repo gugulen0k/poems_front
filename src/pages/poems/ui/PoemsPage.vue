@@ -3,3 +3,5 @@
     Poems Page
   </span>
 </template>
+
+<script setup></script>
