@@ -1,7 +1,7 @@
 <template>
   <Menubar
     :model="items"
-    class="rounded-none bg-transparent border-none"
+    class="px-0 rounded-none bg-transparent border-none"
     breakpoint="640px"
     :pt="menubarStyles"
   >
