@@ -4,8 +4,10 @@ import pluginVue from 'eslint-plugin-vue'
 import eslintConfigPrettier from 'eslint-config-prettier'
 import stylisticJs from '@stylistic/eslint-plugin-js'
 import vueEslintParser from 'vue-eslint-parser'
+import pluginQuery from '@tanstack/eslint-plugin-query'
 
 export default [
+  ...pluginQuery.configs['flat/recommended'],
   {
     plugins: {
       '@stylistic/js': stylisticJs,

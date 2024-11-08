@@ -22,6 +22,7 @@ export function usePoemsQuery(pagination, filters = {}) {
   const { data, isSuccess, isPending, isError, error } = useQuery({
     queryKey: [QUERY_KEY, currentPage, filters],
     queryFn: () => fetchPoems(currentPage.value, itemsPerPage.value, filters),
+    retry: 1,
   })
 
   return { data, isSuccess, isPending, isError, error }
