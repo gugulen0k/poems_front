@@ -1,10 +1,12 @@
 <template>
   <div v-if="poems">
+    <Paginator></Paginator>
     <div
       class="grid gap-8 grid-cols-[repeat(4,_minmax(20rem,_1fr))] grid-rows-[repeat(5,_1fr)]"
     >
       <PoemSkeleton v-for="item in paginationState.itemsPerPage" :key="item" />
     </div>
+    <Paginator></Paginator>
   </div>
 
   <div v-else>
@@ -23,7 +25,7 @@
     >
       <template #grid="slotProps">
         <div
-          class="grid justify-center gap-8 grid-cols-[repeat(auto-fit,_minmax(20rem,_1fr))]"
+          class="py-4 grid justify-center gap-8 grid-cols-[repeat(auto-fit,_minmax(20rem,_1fr))]"
         >
           <PoemCard
             v-for="item in slotProps.items"

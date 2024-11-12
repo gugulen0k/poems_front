@@ -4,9 +4,14 @@
       <slot name="header"></slot>
     </header>
 
-    <div class="min-h-full my-4 p-4 rounded-2xl bg-slate-100">
-      <slot name="content"></slot>
-    </div>
+    <main class="flex">
+      <div>
+        <slot name="sidebar"></slot>
+      </div>
+      <div>
+        <slot name="content"></slot>
+      </div>
+    </main>
   </div>
 </template>
 

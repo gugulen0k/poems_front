@@ -15,7 +15,7 @@
     <template #footer>
       <div class="flex gap-4">
         <Button icon="pi pi-heart" severity="danger" outlined />
-        <Button label="Read" class="flex-1" fluid />
+        <Button label="Read" class="flex-1" outlined fluid />
       </div>
     </template>
   </Card>
