@@ -1,23 +1,21 @@
 import { defineStore } from 'pinia'
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 
 export const useSidebarStore = defineStore(
   'sidebar',
   () => {
-    const sidebar = ref({ isOpen: false })
-
-    const sidebarState = computed(() => sidebar.value.isOpen)
-    const activeItem = computed(() => sidebar.value.activeItem)
+    const isOpen = ref(true)
+    const activeItem = ref('All Poems')
 
     function toggleSidebar() {
       isOpen.value = !isOpen.value
     }
 
-    function setActiveItem(itemKey) {
-      sidebar.value.activeItem = itemKey
+    function setActiveItem(item) {
+      activeItem.value = item
     }
 
-    return { activeItem, sidebarState, toggleSidebar, setActiveItem }
+    return { activeItem, isOpen, toggleSidebar, setActiveItem }
   },
   { persist: true }
 )

@@ -1,16 +1,16 @@
 <template>
-  <div class="min-h-full mx-4">
+  <div class="h-full flex flex-col gap-4">
     <header class="max-h-fit">
       <slot name="header"></slot>
     </header>
 
-    <main class="flex">
-      <div>
+    <main class="h-full grid grid-cols-[max-content_1fr] pb-4">
+      <nav>
         <slot name="sidebar"></slot>
-      </div>
-      <div>
+      </nav>
+      <section class="flex-[1_0_0] px-4">
         <slot name="content"></slot>
-      </div>
+      </section>
     </main>
   </div>
 </template>

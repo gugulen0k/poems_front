@@ -1,30 +1,45 @@
 <template>
-  <nav>
-    <ul class="space-y-2">
-      <li v-for="item in menuitems" :key="item.label">
-        <button
-          class="w-full flex items-center p-2 space-x-2 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-          :class="activeSection === section.title ? section.color : ''"
-          :aria-label="section.title"
-          @click="setActiveSection(section.title)"
-        >
-          <component
-            :is="section.icon"
-            :size="24"
-            :class="isCollapsed ? 'mx-auto' : ''"
-          />
-          <span v-if="!isCollapsed">{{ section.title }}</span>
-        </button>
-      </li>
-    </ul>
-  </nav>
+  <div class="min-h-full bg-primary-50 px-4 flex items-center rounded-r-lg">
+    <div class="flex flex-col justify-center gap-4">
+      <Button
+        v-for="item in menuItems"
+        :key="item.label"
+        :class="[
+          activeItem === item.label ? 'bg-primary-300' : '',
+          isOpen ? 'flex justify-start w-full' : '',
+        ]"
+        :aria-label="item.label"
+        :to="item.route"
+        as="router-link"
+        fluid
+        @click="updateSidebarState(item.label)"
+      >
+        <template #default>
+          <div
+            :class="
+              isOpen &&
+              'w-full grid gap-2 grid-cols-[max-content_1fr] items-center'
+            "
+          >
+            <FontAwesomeIcon :icon="item.icon" />
+            <span v-if="isOpen" class="text-center">{{ item.label }}</span>
+          </div>
+        </template>
+      </Button>
+    </div>
+  </div>
 </template>
 
 <script setup>
   import { computed } from 'vue'
+  import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
   import { useSidebarStore } from '@/shared/model/stores/useSidebarStore'
   import { menuItems } from '../lib/menuItems'
 
   const sidebarStore = useSidebarStore()
-  const isCollapsed = computed(() => sidebarStore.sidebarState)
+  const isOpen = computed(() => sidebarStore.isOpen)
+  const activeItem = computed(() => sidebarStore.activeItem)
+  const updateSidebarState = (label) => {
+    sidebarStore.setActiveItem(label)
+  }
 </script>

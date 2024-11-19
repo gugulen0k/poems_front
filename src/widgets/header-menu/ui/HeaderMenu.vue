@@ -1,5 +1,5 @@
 <template>
-  <nav class="my-2">
+  <nav class="py-2 px-4">
     <div class="flex items-center">
       <div class="">
         <Button severity="secondary" @click="sidebarStore.toggleSidebar">
@@ -29,7 +29,6 @@
   import { faBars, faUser } from '@fortawesome/free-solid-svg-icons'
 
   import { useSidebarStore } from '@/shared/model/stores/useSidebarStore'
-  import { computed } from 'vue'
 
   const sidebarStore = useSidebarStore()
 </script>

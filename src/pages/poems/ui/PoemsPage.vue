@@ -1,5 +1,5 @@
 <template>
-  <div v-if="poems">
+  <div v-if="isPending">
     <Paginator></Paginator>
     <div
       class="grid gap-8 grid-cols-[repeat(4,_minmax(20rem,_1fr))] grid-rows-[repeat(5,_1fr)]"
@@ -9,17 +9,13 @@
     <Paginator></Paginator>
   </div>
 
-  <div v-else>
-    <Paginator
-      :first="paginationState.startIndex"
-      :rows="paginationState.itemsPerPage"
-      :total-records="meta.total_items"
-      :rows-per-page-options="rowsPerPageOptions"
-      @page="updatePagination"
-    ></Paginator>
+  <div v-else class="h-full flex flex-col">
+    <PoemsFilters />
+
     <DataView
       :value="poems"
       :pt="dataViewPassThroughOpts"
+      class="my-auto"
       layout="grid"
       @page="updatePagination"
     >
@@ -37,11 +33,11 @@
 
       <template #empty> No Poems </template>
     </DataView>
+
     <Paginator
       :first="paginationState.startIndex"
       :rows="paginationState.itemsPerPage"
       :total-records="meta.total_items"
-      :rows-per-page-options="rowsPerPageOptions"
       @page="updatePagination"
     ></Paginator>
   </div>
@@ -55,8 +51,8 @@
 
   import PoemSkeleton from './PoemSkeleton.vue'
   import PoemCard from './PoemCard.vue'
+  import PoemsFilters from './PoemsFilters.vue'
 
-  const rowsPerPageOptions = ref([10, 20, 30])
   const dataViewPassThroughOpts = {
     header: {
       class: 'bg-transparent',

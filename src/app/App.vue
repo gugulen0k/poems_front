@@ -30,6 +30,10 @@
   }
 
   #app {
-    min-height: 100%;
+    height: 100%;
   }
+
+  /** {*/
+  /*  outline: 1px solid red;*/
+  /*}*/
 </style>

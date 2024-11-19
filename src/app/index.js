@@ -3,7 +3,7 @@ import { VueQueryPlugin } from '@tanstack/vue-query'
 import PrimeVue from 'primevue/config'
 
 import './index.scss'
-import { NoirAura, pinia, router } from './providers'
+import { MyPreset, pinia, router } from './providers'
 import App from './App.vue'
 
 const app = createApp(App)
@@ -12,7 +12,7 @@ const app = createApp(App)
   .use(pinia)
   .use(PrimeVue, {
     theme: {
-      preset: NoirAura,
+      preset: MyPreset,
       options: {
         darkModeSelector: '.dark-theme-enabled',
         cssLayer: {
