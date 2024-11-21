@@ -1,27 +1,47 @@
 <template>
-  <Card>
-    <template #default>
-      <Form
-        v-slot="$form"
-        :initial-values
-        :resolver="resolver"
-        class="flex flex-col gap-4 w-full sm:w-56"
-        @submit="onFormSubmit"
-      >
-        <div class="flex flex-col gap-1">
-          <InputText name="username" type="text" placeholder="Username" fluid />
+  <Panel header="Filters" toggleable>
+    <Form
+      v-slot="$form"
+      :initial-values
+      :resolver="resolver"
+      class="flex gap-4 w-full"
+      @submit="onFormSubmit"
+    >
+      <Fluid class="flex gap-4">
+        <div>
+          <InputText name="title" type="text" placeholder="Title" fluid />
           <Message
-            v-if="$form.username?.invalid"
+            v-if="$form.title?.invalid"
             severity="error"
             size="small"
             variant="simple"
-            >{{ $form.username.error.message }}</Message
+            >{{ $form.title.error.message }}</Message
           >
         </div>
-        <Button type="submit" severity="secondary" label="Submit" />
-      </Form>
-    </template>
-  </Card>
+        <div>
+          <InputText name="author" type="text" placeholder="Author" fluid />
+          <Message
+            v-if="$form.author?.invalid"
+            severity="error"
+            size="small"
+            variant="simple"
+            >{{ $form.author.error.message }}</Message
+          >
+        </div>
+        <div>
+          <DatePicker name="release-date" placeholder="Release Date" fluid />
+          <Message
+            v-if="$form.releaseDate?.invalid"
+            severity="error"
+            size="small"
+            variant="simple"
+            >{{ $form.releaseDate.error.message }}</Message
+          >
+        </div>
+      </Fluid>
+      <Button type="submit" severity="secondary" label="Submit" />
+    </Form>
+  </Panel>
 </template>
 
 <script setup>
@@ -33,7 +53,7 @@
   const initialValues = ref({
     title: '',
     author: '',
-    releaseDate: null,
+    releaseDate: '',
   })
 
   const resolver = ref(

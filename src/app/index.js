@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import { VueQueryPlugin } from '@tanstack/vue-query'
+import { MotionPlugin } from '@vueuse/motion'
 import PrimeVue from 'primevue/config'
 
 import './index.scss'
@@ -10,6 +11,7 @@ const app = createApp(App)
   .use(VueQueryPlugin)
   .use(router)
   .use(pinia)
+  .use(MotionPlugin)
   .use(PrimeVue, {
     theme: {
       preset: MyPreset,

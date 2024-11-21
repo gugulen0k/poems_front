@@ -1,34 +1,39 @@
 <template>
-  <div v-if="isPending">
-    <Paginator></Paginator>
-    <div
-      class="grid gap-8 grid-cols-[repeat(4,_minmax(20rem,_1fr))] grid-rows-[repeat(5,_1fr)]"
-    >
-      <PoemSkeleton v-for="item in paginationState.itemsPerPage" :key="item" />
-    </div>
-    <Paginator></Paginator>
-  </div>
+  <div class="w-full h-full flex flex-col bg-white rounded-xl">
+    <PoemsFilters class="mt-4 ml-4 mr-4" />
 
-  <div v-else class="h-full flex flex-col">
-    <PoemsFilters />
+    <div v-if="isPending" class="flex justify-center">
+      <ProgressSpinner />
+    </div>
 
     <DataView
+      v-else
       :value="poems"
       :pt="dataViewPassThroughOpts"
-      class="my-auto"
+      class="relative h-full my-4 mx-2"
       layout="grid"
       @page="updatePagination"
     >
       <template #grid="slotProps">
-        <div
-          class="py-4 grid justify-center gap-8 grid-cols-[repeat(auto-fit,_minmax(20rem,_1fr))]"
+        <ScrollPanel
+          class="absolute top-0 left-0 w-full h-full overflow-x-hidden"
+          :dt="{ bar: { background: '{primary.500}' } }"
         >
-          <PoemCard
-            v-for="item in slotProps.items"
-            :key="item.id"
-            :poem="item"
-          />
-        </div>
+          <div
+            class="overflow-x-hidden p-4 grid justify-center gap-8 grid-cols-[repeat(auto-fit,_minmax(30rem,_1fr))]"
+          >
+            <PoemCard
+              v-for="(item, index) in slotProps.items"
+              :key="item.id"
+              v-motion
+              :poem="item"
+              :initial="{ opacity: 0, x: 20 }"
+              :visible-once="{ opacity: 1, x: 0 }"
+              :delay="index * 100"
+              :duration="200"
+            />
+          </div>
+        </ScrollPanel>
       </template>
 
       <template #empty> No Poems </template>
@@ -49,7 +54,6 @@
   import { PAGE_ID } from '../lib/constants'
   import { usePoemsQuery } from '../api/usePoemsQuery'
 
-  import PoemSkeleton from './PoemSkeleton.vue'
   import PoemCard from './PoemCard.vue'
   import PoemsFilters from './PoemsFilters.vue'
 

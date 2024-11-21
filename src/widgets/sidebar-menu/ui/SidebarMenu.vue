@@ -1,12 +1,15 @@
 <template>
-  <div class="min-h-full bg-primary-50 px-4 flex items-center rounded-r-lg">
+  <div
+    class="min-h-full max-w-full bg-primary px-4 flex items-center rounded-r-lg"
+  >
     <div class="flex flex-col justify-center gap-4">
       <Button
         v-for="item in menuItems"
         :key="item.label"
         :class="[
-          activeItem === item.label ? 'bg-primary-300' : '',
+          activeItem === item.label ? 'bg-primary-100 text-primary-800' : '',
           isOpen ? 'flex justify-start w-full' : '',
+          'transition-all ease-out duration-200',
         ]"
         :aria-label="item.label"
         :to="item.route"
@@ -17,12 +20,15 @@
         <template #default>
           <div
             :class="
-              isOpen &&
-              'w-full grid gap-2 grid-cols-[max-content_1fr] items-center'
+              isOpen
+                ? 'w-full grid gap-2 grid-cols-[max-content_1fr] items-center'
+                : 'flex-1 align-middle'
             "
           >
-            <FontAwesomeIcon :icon="item.icon" />
-            <span v-if="isOpen" class="text-center">{{ item.label }}</span>
+            <FontAwesomeIcon :icon="item.icon" class="text-xl" />
+            <span v-if="isOpen" class="align-middle text-lg">{{
+              item.label
+            }}</span>
           </div>
         </template>
       </Button>

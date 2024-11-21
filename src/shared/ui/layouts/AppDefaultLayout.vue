@@ -8,7 +8,7 @@
       <nav>
         <slot name="sidebar"></slot>
       </nav>
-      <section class="flex-[1_0_0] px-4">
+      <section class="px-4">
         <slot name="content"></slot>
       </section>
     </main>

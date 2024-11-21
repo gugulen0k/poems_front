@@ -31,6 +31,7 @@
 
   #app {
     height: 100%;
+    overflow-y: hidden;
   }
 
   /** {*/

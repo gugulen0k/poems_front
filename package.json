@@ -20,6 +20,7 @@
     "@primevue/themes": "^4.0.4",
     "@tanstack/vue-query": "^5.51.21",
     "@tanstack/vue-query-devtools": "^5.59.16",
+    "@vueuse/motion": "^2.2.6",
     "axios": "^1.7.7",
     "pinia": "^2.2.0",
     "pinia-plugin-persistedstate": "^3.2.3",
