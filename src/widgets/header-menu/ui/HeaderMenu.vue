@@ -1,13 +1,6 @@
 <template>
   <nav class="py-2 px-4">
     <div class="flex items-center">
-      <div class="">
-        <Button severity="secondary" @click="sidebarStore.toggleSidebar">
-          <template #icon>
-            <FontAwesomeIcon :icon="faBars" />
-          </template>
-        </Button>
-      </div>
       <div class="m-auto">
         <Button text>
           <span class="text-xl font-semibold">VerseNest</span>
@@ -26,9 +19,5 @@
 
 <script setup>
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-  import { faBars, faUser } from '@fortawesome/free-solid-svg-icons'
-
-  import { useSidebarStore } from '@/shared/model/stores/useSidebarStore'
-
-  const sidebarStore = useSidebarStore()
+  import { faUser } from '@fortawesome/free-solid-svg-icons'
 </script>

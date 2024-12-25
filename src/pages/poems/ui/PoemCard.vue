@@ -14,14 +14,21 @@
 
     <template #footer>
       <div class="mt-4 flex gap-4">
-        <Button icon="pi pi-heart" severity="secondary" />
-        <Button label="Read" class="flex-1" severity="secondary" />
+        <Button severity="secondary" outlined>
+          <template #icon>
+            <FontAwesomeIcon :icon="faHeart" />
+          </template>
+        </Button>
+        <Button label="Read" class="flex-1" />
       </div>
     </template>
   </Card>
 </template>
 
 <script setup>
+  import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+  import { faHeart } from '@fortawesome/free-regular-svg-icons'
+
   defineProps({
     poem: {
       type: Object,

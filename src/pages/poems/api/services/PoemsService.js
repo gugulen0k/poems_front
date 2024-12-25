@@ -12,12 +12,11 @@ class PoemsService {
     })
   }
 
-  async randomPoem(page, itemsPerPage, filters) {
+  async randomPoem(page, itemsPerPage) {
     return await axiosClient.get(`${BASE_API_URL}/poems`, {
       params: {
         page,
         items: itemsPerPage,
-        ...filters,
       },
     })
   }
