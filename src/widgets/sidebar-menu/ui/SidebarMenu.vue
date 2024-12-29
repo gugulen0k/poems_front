@@ -1,29 +1,29 @@
 <template>
-  <div>
-    <Button class="absolute z-10 tablet:hidden">
-      <FontAwesomeIcon :icon="faBars" />
+  <div
+    v-motion
+    :initial="{ opacity: 0, translateX: -100 }"
+    :enter="{ opacity: 1, translateX: 0 }"
+    :duration="200"
+    class="hidden laptop:min-h-full laptop:max-w-full laptop:bg-primary laptop:px-4 laptop:flex laptop:items-center laptop:relative"
+  >
+    <Button
+      class="absolute top-1 -right-4"
+      rounded
+      severity="secondary"
+      @click="sidebarStore.toggleSidebar"
+    >
+      <template #icon>
+        <FontAwesomeIcon
+          :icon="isOpen ? faArrowLeft : faArrowRight"
+          class="text-xl"
+        />
+      </template>
     </Button>
 
-    <div
-      v-motion
-      :initial="{ opacity: 0, translateX: -100 }"
-      :enter="{ opacity: 1, translateX: 0 }"
-      :duration="200"
-      class="hidden laptop:min-h-full laptop:max-w-full laptop:bg-primary laptop:px-4 laptop:flex laptop:items-center laptop:relative"
-    >
-      <Button class="absolute top-1 left-1" @click="sidebarStore.toggleSidebar">
-        <template #icon>
-          <FontAwesomeIcon
-            v-motion
-            :initial="{ rotateZ: 0 }"
-            :tapped="{ rotateZ: -180 }"
-            :icon="isOpen ? faArrowLeft : faArrowRight"
-            class="text-xl"
-          />
-        </template>
-      </Button>
+    <div class="min-h-full flex flex-col">
+      <FontAwesomeIcon :icon="faScroll" />
 
-      <div class="flex flex-col justify-center gap-4">
+      <div class="m-auto flex flex-col justify-center gap-4">
         <Button
           v-for="item in menuItems"
           :key="item.label"
@@ -57,20 +57,27 @@
           </template>
         </Button>
       </div>
+
+      <Button>
+        <template #icon>
+          <FontAwesomeIcon :icon="faUser" />
+        </template>
+      </Button>
     </div>
   </div>
 </template>
 
 <script setup>
-  import { computed, ref } from 'vue'
+  import { computed } from 'vue'
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
   import {
     faArrowRight,
     faArrowLeft,
-    faHamburger,
+    faScroll,
+    faUser,
   } from '@fortawesome/free-solid-svg-icons'
   import { useSidebarStore } from '@/shared/model/stores/useSidebarStore'
-  import { menuItems } from '../lib/menuItems'
+  import { menuItems } from '@/shared/lib/menuItems'
 
   const sidebarStore = useSidebarStore()
   const isOpen = computed(() => sidebarStore.isOpen)
@@ -78,6 +85,4 @@
   const updateSidebarState = (label) => {
     sidebarStore.setActiveItem(label)
   }
-
-  const mobileSidebarVisible = ref(false)
 </script>

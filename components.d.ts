@@ -15,6 +15,7 @@ declare module 'vue' {
     Chip: typeof import('primevue/chip')['default']
     DataView: typeof import('primevue/dataview')['default']
     DatePicker: typeof import('primevue/datepicker')['default']
+    Drawer: typeof import('primevue/drawer')['default']
     Fluid: typeof import('primevue/fluid')['default']
     InputText: typeof import('primevue/inputtext')['default']
     Menu: typeof import('primevue/menu')['default']
@@ -33,5 +34,6 @@ declare module 'vue' {
   }
   export interface ComponentCustomProperties {
     Ripple: typeof import('primevue/ripple')['default']
+    StyleClass: typeof import('primevue/styleclass')['default']
   }
 }

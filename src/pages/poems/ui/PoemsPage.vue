@@ -3,7 +3,25 @@
     v-motion-fade
     class="w-full h-full flex flex-col bg-white tablet:rounded-xl"
   >
-    <PoemsFilters class="mt-4 ml-4 mr-4" />
+    <div class="m-4 mb-0 laptop:hidden">
+      <MobileSidebarMenu v-model="mobileSidebarVisible" />
+
+      <div class="flex justify-between px-2">
+        <Button>
+          <template #icon>
+            <FontAwesomeIcon :icon="faFilter" />
+          </template>
+        </Button>
+
+        <Button @click="mobileSidebarVisible = true">
+          <template #icon>
+            <FontAwesomeIcon :icon="faBars" />
+          </template>
+        </Button>
+      </div>
+    </div>
+
+    <PoemsFilters class="m-4 mb-0" />
 
     <div v-if="isPending" class="flex justify-center">
       <ProgressSpinner />
@@ -75,9 +93,15 @@
     FontAwesomeIcon,
     FontAwesomeLayers,
   } from '@fortawesome/vue-fontawesome'
-  import { faFeatherPointed, faScroll } from '@fortawesome/free-solid-svg-icons'
+  import {
+    faFeatherPointed,
+    faScroll,
+    faFilter,
+    faBars,
+  } from '@fortawesome/free-solid-svg-icons'
 
   import PoemCard from './PoemCard.vue'
+  import MobileSidebarMenu from '@/widgets/mobile-sidebar-menu'
   import PoemsFilters from './PoemsFilters.vue'
 
   const dataViewPassThroughOpts = {
@@ -88,6 +112,8 @@
       class: 'bg-transparent',
     },
   }
+
+  const mobileSidebarVisible = ref(false)
 
   const paginationStore = usePaginationStore()
   const paginationState = computed(() =>

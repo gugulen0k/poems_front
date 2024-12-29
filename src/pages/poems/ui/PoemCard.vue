@@ -9,7 +9,7 @@
     </template>
 
     <template #content>
-      <span>{{ poem.short_text }}</span>
+      <p class="whitespace-pre-wrap">{{ poem.short_text }}</p>
     </template>
 
     <template #footer>

@@ -21,9 +21,4 @@ export const menuItems = ref([
     route: '/authors',
     icon: faUsers,
   },
-  {
-    label: 'Random Author',
-    route: '/authors/:id',
-    icon: faShuffle,
-  },
 ])
