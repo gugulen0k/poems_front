@@ -1,66 +1,48 @@
 <template>
-  <Drawer ref="filtersCollapsed">
-    <template #footer>
-      <Button type="submit" severity="danger" size="small" @click="onFormReset">
-        <template #icon>
+  <Drawer v-model:visible="visibility" header="Filters" position="right">
+    <div class="">
+      <Filtering
+        ref="filtering"
+        class="flex-col w-full"
+        :filters-list="filtersList"
+        :initial-values="initialValues"
+        :validation-schema="validationSchema"
+        :page-id="pageId"
+      />
+    </div>
+
+    <div class="mt-auto flex flex-shrink h-max">
+      <Button
+        class="my-4 text-lg"
+        variant="outlined"
+        severity="danger"
+        @click="resetFilters"
+      >
+        <template #default>
           <FontAwesomeIcon :icon="faFilterCircleXmark" />
         </template>
       </Button>
-
-      <div class="flex gap-2">
-        <div v-for="(value, filterName) in form" :key="filterName">
-          <Chip
-            v-if="value"
-            class="rounded-md py-1 border border-primary-200 bg-none"
-          >
-            {{ StringUtils.camelToFlat(filterName).trim() }}: {{ value }}
-          </Chip>
-        </div>
-      </div>
-    </template>
-
-    <form
-      :name="pageId"
-      class="pt-2 flex items-end gap-4 w-full"
-      @submit="onFormSubmit"
-    >
-      <Fluid class="flex gap-4">
-        <component
-          :is="getInputComponent(field.type)"
-          v-for="field in filtersList"
-          :key="field.name"
-          v-model="form[field.name]"
-          :name="field.name"
-          :label="field.label"
-          v-bind="field.componentAttrs"
-        />
-      </Fluid>
-
-      <Button type="submit" label="Search" class="h-full">
+      <Button type="submit" label="Search" @click="submitFilters">
         <template #icon>
           <FontAwesomeIcon :icon="faSearch" />
         </template>
       </Button>
-    </form>
+    </div>
   </Drawer>
 </template>
 
 <script setup>
+  import { ref } from 'vue'
+
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
   import {
     faSearch,
     faFilterCircleXmark,
   } from '@fortawesome/free-solid-svg-icons'
 
-  import { computed, ref, toRefs } from 'vue'
-  import { ValidatedInputDate, ValidatedInputText } from '@/shared/ui/inputs'
-  import { TEXT, DATE } from '@/shared/lib/constants'
-  import { useForm } from 'vee-validate'
-  import { useFiltersStore } from '@/shared/model/stores/useFiltersStore'
-  import ObjectUtils from '@/shared/lib/utils/object'
-  import StringUtils from '@/shared/lib/utils/string'
+  import Filtering from '@/features/filtering/ui/Filtering.vue'
 
-  const props = defineProps({
+  defineProps({
     filtersList: {
       type: Array,
       required: true,
@@ -79,50 +61,18 @@
     },
   })
 
-  const { filtersList, schema, initialValues, pageId } = toRefs(props)
+  const visibility = defineModel()
+  const filtering = ref(null)
 
-  const filtersCollapsed = ref(false)
-  const filtersStore = useFiltersStore()
+  const resetFilters = () => {
+    if (!filtering.value) return
 
-  const form = computed(() => {
-    const appliedFilters = filtersStore.getFiltersState(pageId.value)
-    const result = {
-      ...initialValues.value,
-      ...appliedFilters,
-    }
-
-    if (appliedFilters.releaseDate) {
-      result.releaseDate = new Date(
-        appliedFilters.releaseDate
-      ).toLocaleDateString()
-    }
-
-    return result
-  })
-
-  const { handleSubmit, setValues } = useForm({
-    validationSchema: schema,
-    initialValues: form,
-  })
-
-  const onFormReset = () => {
-    filtersStore.updateFilters(pageId.value, {})
-    setValues(initialValues.value)
+    filtering.value.onFormReset()
   }
 
-  const onFormSubmit = handleSubmit((values) => {
-    const appliedFilters = ObjectUtils.cleanEmptyValues(values)
+  const submitFilters = () => {
+    if (!filtering.value) return
 
-    filtersCollapsed.value = true
-    filtersStore.updateFilters(pageId.value, appliedFilters)
-  })
-
-  const getInputComponent = (type) => {
-    switch (type) {
-      case TEXT:
-        return ValidatedInputText
-      case DATE:
-        return ValidatedInputDate
-    }
+    filtering.value.onFormSubmit()
   }
 </script>

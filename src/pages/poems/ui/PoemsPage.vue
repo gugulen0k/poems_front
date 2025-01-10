@@ -7,7 +7,7 @@
       <MobileSidebarMenu v-model="mobileSidebarVisible" />
 
       <div class="flex justify-between px-2">
-        <Button>
+        <Button @click="mobileFiltersVisible = true">
           <template #icon>
             <FontAwesomeIcon :icon="faFilter" />
           </template>
@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <PoemsFilters class="m-4 mb-0" />
+    <PoemsFilters v-model="mobileFiltersVisible" />
 
     <div v-if="isPending" class="flex justify-center">
       <ProgressSpinner />
@@ -102,6 +102,7 @@
 
   import PoemCard from './PoemCard.vue'
   import MobileSidebarMenu from '@/widgets/mobile-sidebar-menu'
+  import MobileFiltersPanel from '@/widgets/mobile-filters-panel'
   import PoemsFilters from './PoemsFilters.vue'
 
   const dataViewPassThroughOpts = {
@@ -114,6 +115,7 @@
   }
 
   const mobileSidebarVisible = ref(false)
+  const mobileFiltersVisible = ref(false)
 
   const paginationStore = usePaginationStore()
   const paginationState = computed(() =>

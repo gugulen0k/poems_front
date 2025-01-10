@@ -62,7 +62,7 @@
 </template>
 
 <script setup>
-  import { computed, ref } from 'vue'
+  import { computed } from 'vue'
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
   import { faScroll, faUser } from '@fortawesome/free-solid-svg-icons'
   import { useSidebarStore } from '@/shared/model/stores/useSidebarStore'

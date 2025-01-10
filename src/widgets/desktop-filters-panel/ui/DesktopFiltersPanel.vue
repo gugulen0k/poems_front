@@ -1,42 +1,54 @@
 <template>
-  <Panel ref="filtersCollapsed" toggleable class="hidden laptop:block">
+  <Panel
+    ref="filtersCollapsed"
+    toggleable
+    class="hidden laptop:block laptop:mb-4"
+  >
     <template #header>
-      <Button type="submit" severity="danger" size="small" @click="onFormReset">
+      <Button
+        type="submit"
+        severity="danger"
+        size="small"
+        @click="resetFilters"
+      >
         <template #icon>
           <FontAwesomeIcon :icon="faFilterCircleXmark" />
         </template>
       </Button>
+    </template>
 
-      <div class="flex gap-2">
-        <div v-for="(value, filterName) in form" :key="filterName">
-          <Chip
-            v-if="value"
-            class="rounded-md py-1 border border-primary-200 bg-none"
-          >
-            {{ StringUtils.camelToFlat(filterName).trim() }}: {{ value }}
-          </Chip>
-        </div>
+    <Filtering
+      ref="filtering"
+      :filters-list="filtersList"
+      :initial-values="initialValues"
+      :validation-schema="validationSchema"
+      :page-id="pageId"
+    />
+
+    <template #footer>
+      <div class="flex justify-end">
+        <Button type="submit" label="Search" @click="submitFilters">
+          <template #icon>
+            <FontAwesomeIcon :icon="faSearch" />
+          </template>
+        </Button>
       </div>
     </template>
   </Panel>
 </template>
 
 <script setup>
+  import { ref } from 'vue'
+
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
   import {
     faSearch,
     faFilterCircleXmark,
   } from '@fortawesome/free-solid-svg-icons'
 
-  import { computed, ref, toRefs } from 'vue'
-  import { ValidatedInputDate, ValidatedInputText } from '@/shared/ui/inputs'
-  import { TEXT, DATE } from '@/shared/lib/constants'
-  import { useForm } from 'vee-validate'
-  import { useFiltersStore } from '@/shared/model/stores/useFiltersStore'
-  import ObjectUtils from '@/shared/lib/utils/object'
-  import StringUtils from '@/shared/lib/utils/string'
+  import Filtering from '@/features/filtering/ui/Filtering.vue'
 
-  const props = defineProps({
+  defineProps({
     filtersList: {
       type: Array,
       required: true,
@@ -55,50 +67,19 @@
     },
   })
 
-  const { filtersList, schema, initialValues, pageId } = toRefs(props)
-
+  const filtering = ref(null)
   const filtersCollapsed = ref(false)
-  const filtersStore = useFiltersStore()
 
-  const form = computed(() => {
-    const appliedFilters = filtersStore.getFiltersState(pageId.value)
-    const result = {
-      ...initialValues.value,
-      ...appliedFilters,
-    }
+  const resetFilters = () => {
+    if (!filtering.value) return
 
-    if (appliedFilters.releaseDate) {
-      result.releaseDate = new Date(
-        appliedFilters.releaseDate
-      ).toLocaleDateString()
-    }
-
-    return result
-  })
-
-  const { handleSubmit, setValues } = useForm({
-    validationSchema: schema,
-    initialValues: form,
-  })
-
-  const onFormReset = () => {
-    filtersStore.updateFilters(pageId.value, {})
-    setValues(initialValues.value)
+    filtering.value.onFormReset()
   }
 
-  const onFormSubmit = handleSubmit((values) => {
-    const appliedFilters = ObjectUtils.cleanEmptyValues(values)
+  const submitFilters = () => {
+    if (!filtering.value) return
 
     filtersCollapsed.value = true
-    filtersStore.updateFilters(pageId.value, appliedFilters)
-  })
-
-  const getInputComponent = (type) => {
-    switch (type) {
-      case TEXT:
-        return ValidatedInputText
-      case DATE:
-        return ValidatedInputDate
-    }
+    filtering.value.onFormSubmit()
   }
 </script>
