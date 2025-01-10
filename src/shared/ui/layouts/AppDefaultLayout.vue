@@ -1,12 +1,18 @@
 <template>
-  <div class="h-full">
-    <header class="max-h-fit">
-      <slot name="header"></slot>
-    </header>
+  <div class="h-full grid grid-cols-[max-content_1fr]">
+    <nav>
+      <slot name="sidebar"></slot>
+    </nav>
 
-    <div class="min-h-full flex m-4 p-4 rounded-2xl bg-slate-100">
-      <ScrollPanel class="min-w-full"><slot name="content"></slot></ScrollPanel>
-    </div>
+    <main class="h-full flex flex-col gap-4 tablet:p-4 laptop:px-10">
+      <!--      <header class="max-h-fit">
+        <slot name="header"></slot>
+      </header>-->
+
+      <section class="h-full">
+        <slot name="content"></slot>
+      </section>
+    </main>
   </div>
 </template>
 

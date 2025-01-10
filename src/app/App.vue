@@ -4,6 +4,10 @@
       <HeaderMenu />
     </template>
 
+    <template #sidebar>
+      <SidebarMenu />
+    </template>
+
     <template #content>
       <RouterView />
     </template>
@@ -15,6 +19,7 @@
 <script setup>
   import AppDefaultLayout from '@/shared/ui/layouts/AppDefaultLayout.vue'
   import HeaderMenu from '@/widgets/header-menu'
+  import SidebarMenu from '@/widgets/sidebar-menu/ui/SidebarMenu.vue'
   import { VueQueryDevtools } from '@tanstack/vue-query-devtools'
 </script>
 
@@ -25,6 +30,11 @@
   }
 
   #app {
-    min-height: 100%;
+    height: 100%;
+    overflow-y: hidden;
   }
+
+  /** {*/
+  /*  outline: 1px solid red;*/
+  /*}*/
 </style>

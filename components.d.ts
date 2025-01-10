@@ -8,14 +8,32 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Avatar: typeof import('primevue/avatar')['default']
+    Badge: typeof import('primevue/badge')['default']
     Button: typeof import('primevue/button')['default']
+    ButtonGroup: typeof import('primevue/buttongroup')['default']
+    Card: typeof import('primevue/card')['default']
+    Chip: typeof import('primevue/chip')['default']
+    DataView: typeof import('primevue/dataview')['default']
+    DatePicker: typeof import('primevue/datepicker')['default']
+    Drawer: typeof import('primevue/drawer')['default']
+    Fluid: typeof import('primevue/fluid')['default']
+    InputText: typeof import('primevue/inputtext')['default']
+    Menu: typeof import('primevue/menu')['default']
     Menubar: typeof import('primevue/menubar')['default']
+    Message: typeof import('primevue/message')['default']
+    Paginator: typeof import('primevue/paginator')['default']
+    Panel: typeof import('primevue/panel')['default']
+    ProgressSpinner: typeof import('primevue/progressspinner')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ScrollPanel: typeof import('primevue/scrollpanel')['default']
+    SelectButton: typeof import('primevue/selectbutton')['default']
+    Skeleton: typeof import('primevue/skeleton')['default']
+    Tag: typeof import('primevue/tag')['default']
     ToggleButton: typeof import('primevue/togglebutton')['default']
   }
   export interface ComponentCustomProperties {
     Ripple: typeof import('primevue/ripple')['default']
+    StyleClass: typeof import('primevue/styleclass')['default']
   }
 }

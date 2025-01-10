@@ -1,7 +1,8 @@
 export const routes = [
   {
     path: '/',
-    component: () => import('./home'),
+    redirect: { path: '/poems' },
+    component: () => import('./poems'),
     name: 'Home',
   },
   {
