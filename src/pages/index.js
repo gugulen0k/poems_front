@@ -11,8 +11,17 @@ export const routes = [
     name: 'Poems',
   },
   {
+    path: '/poems/:id',
+    component: () => import('./poem_show'),
+    name: 'Poem',
+  },
+  {
     path: '/authors',
     component: () => import('./authors'),
     name: 'Authors',
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    component: () => import('./not_found'),
   },
 ]
