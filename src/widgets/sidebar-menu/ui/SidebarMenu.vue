@@ -3,11 +3,11 @@
     v-motion
     :initial="{ opacity: 0, translateX: -100 }"
     :enter="{ opacity: 1, translateX: 0 }"
-    :duration="200"
-    class="hidden laptop:min-h-full laptop:max-w-full laptop:bg-primary laptop:px-4 laptop:flex laptop:items-center laptop:relative"
+    :duration="300"
+    class="hidden laptop:h-full laptop:max-w-full laptop:bg-primary laptop:p-4 laptop:flex laptop:items-center laptop:relative"
   >
     <Button
-      class="absolute top-1 -right-4"
+      class="absolute top-1 -right-5"
       rounded
       severity="secondary"
       @click="sidebarStore.toggleSidebar"
@@ -20,10 +20,15 @@
       </template>
     </Button>
 
-    <div class="min-h-full flex flex-col">
-      <FontAwesomeIcon :icon="faScroll" />
+    <div class="h-full flex flex-col justify-center items-center">
+      <div class="flex gap-2 w-max">
+        <FontAwesomeIcon :icon="faScroll" class="text-primary-50 text-3xl" />
+        <span v-if="isOpen" class="text-primary-50 text-xl font-bold"
+          >NestVerse</span
+        >
+      </div>
 
-      <div class="m-auto flex flex-col justify-center gap-4">
+      <div class="my-auto flex flex-col justify-center gap-4">
         <Button
           v-for="item in menuItems"
           :key="item.label"
@@ -58,9 +63,9 @@
         </Button>
       </div>
 
-      <Button>
+      <Button :label="isOpen ? 'John Doe' : ''" class="text-lg" fluid>
         <template #icon>
-          <FontAwesomeIcon :icon="faUser" />
+          <FontAwesomeIcon :icon="faUser" class="text-lg" />
         </template>
       </Button>
     </div>

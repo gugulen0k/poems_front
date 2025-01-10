@@ -102,7 +102,6 @@
 
   import PoemCard from './PoemCard.vue'
   import MobileSidebarMenu from '@/widgets/mobile-sidebar-menu'
-  import MobileFiltersPanel from '@/widgets/mobile-filters-panel'
   import PoemsFilters from './PoemsFilters.vue'
 
   const dataViewPassThroughOpts = {

@@ -1,5 +1,11 @@
 <template>
-  <Card pt:subtitle:class="text-right" class="border shadow-none">
+  <Card
+    pt:subtitle:class="text-right"
+    pt:content:class="h-full flex flex-col justify-center"
+    pt:root:class="flex-row"
+    pt:body:class="w-full"
+    class="border shadow-none"
+  >
     <template #title>
       <span class="font-bold">{{ poem.title }}</span>
     </template>
@@ -9,7 +15,7 @@
     </template>
 
     <template #content>
-      <p class="whitespace-pre-wrap">{{ poem.short_text }}</p>
+      <p class="whitespace-pre-wrap align-middle">{{ poem.short_text }}</p>
     </template>
 
     <template #footer>

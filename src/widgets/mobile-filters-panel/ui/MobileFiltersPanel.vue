@@ -1,6 +1,6 @@
 <template>
   <Drawer v-model:visible="visibility" header="Filters" position="right">
-    <div class="">
+    <div class="h-full flex flex-col">
       <Filtering
         ref="filtering"
         class="flex-col w-full"
@@ -9,24 +9,30 @@
         :validation-schema="validationSchema"
         :page-id="pageId"
       />
-    </div>
 
-    <div class="mt-auto flex flex-shrink h-max">
-      <Button
-        class="my-4 text-lg"
-        variant="outlined"
-        severity="danger"
-        @click="resetFilters"
-      >
-        <template #default>
-          <FontAwesomeIcon :icon="faFilterCircleXmark" />
-        </template>
-      </Button>
-      <Button type="submit" label="Search" @click="submitFilters">
-        <template #icon>
-          <FontAwesomeIcon :icon="faSearch" />
-        </template>
-      </Button>
+      <div class="mt-auto flex gap-4 flex-shrink-0">
+        <Button
+          class="text-lg"
+          variant="outlined"
+          severity="danger"
+          @click="resetFilters"
+        >
+          <template #default>
+            <FontAwesomeIcon :icon="faFilterCircleXmark" />
+          </template>
+        </Button>
+
+        <Button
+          type="submit"
+          label="Search"
+          class="w-full"
+          @click="submitFilters"
+        >
+          <template #icon>
+            <FontAwesomeIcon :icon="faSearch" />
+          </template>
+        </Button>
+      </div>
     </div>
   </Drawer>
 </template>

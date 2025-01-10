@@ -1,5 +1,9 @@
 <template>
-  <form :name="pageId" @submit.prevent="onFormSubmit">
+  <form
+    :name="pageId"
+    @submit.prevent="onFormSubmit"
+    @keyup.enter.prevent="onFormSubmit"
+  >
     <Fluid class="flex gap-4" v-bind="$attrs">
       <component
         :is="getInputComponent(field.type)"
@@ -15,7 +19,7 @@
 </template>
 
 <script setup>
-  import { computed, ref, toRefs } from 'vue'
+  import { computed, toRefs } from 'vue'
   import { ValidatedInputDate, ValidatedInputText } from '@/shared/ui/inputs'
   import { TEXT, DATE } from '@/shared/lib/constants'
   import { useForm } from 'vee-validate'
