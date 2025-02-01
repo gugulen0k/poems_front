@@ -2,7 +2,7 @@
   <div class="w-full h-full flex flex-col bg-white tablet:rounded-xl">
     <MobileSidebarMenu v-model="mobileSidebarVisible" />
 
-    <div class="flex justify-between laptop:justify-end p-4 sticky">
+    <div class="p-4 sticky flex justify-between laptop:justify-end">
       <Button variant="outlined">
         <template #icon>
           <FontAwesomeIcon :icon="emptyHeart" />
@@ -31,17 +31,38 @@
               v-if="poem.author"
               class="w-full flex flex-col items-center gap-4"
             >
-              <img :src="poem.author.image" class="rounded-full w-40" />
-              <div class="w-32 h-32 rounded-full bg-primary-100">
-                <FontAwesomeIcon :icon="faUser" />
+              <div
+                v-if="poem.author.image"
+                class="border-4 border-primary-700 rounded-full w-40 h-40 overflow-hidden shadow-lg"
+              >
+                <img :src="poem.author.image" class="w-max" />
               </div>
-              <span class="text-xl italic text-slate-600">{{
+
+              <div
+                v-else
+                class="w-40 h-40 border-4 border-primary-700 rounded-full bg-primary-100 flex justify-center items-center"
+              >
+                <FontAwesomeIcon
+                  :icon="faUser"
+                  class="text-6xl text-primary-700"
+                />
+              </div>
+
+              <span class="text-xl desktop:text-2xl italic text-primary-600">{{
                 authorsName
               }}</span>
             </div>
 
-            <div class="text-2xl text-center font-bold">{{ poem.title }}</div>
-            <div class="mt-4 whitespace-pre-wrap text-lg">{{ poem.text }}</div>
+            <div
+              class="mt-10 text-primary-950 text-2xl desktop:text-3xl text-center font-bold"
+            >
+              {{ poem.title }}
+            </div>
+            <div
+              class="mt-4 whitespace-pre-wrap text-primary-900 text-xl desktop:text-2xl"
+            >
+              {{ poem.text }}
+            </div>
             <div
               v-if="poem.released"
               class="text-slate-500 mt-8 text-lg text-right italic"
@@ -82,16 +103,16 @@
   const { data, isPending } = usePoemQuery(id)
 
   const mobileSidebarVisible = ref(false)
-  const imageUrl = 'https://dummyimage.com/300.png/09f/fff'
 
   watch(
-    data,
-    (currentData) => {
-      if (!data.value) return
+    () => data.value, // Watch the reactive `data.value`
+    (newData) => {
+      if (!newData) return // Safeguard for null or undefined data
 
-      poem.value = currentData.data
-      authorsName.value = `${poem.value?.author?.name} ${poem.value?.author?.surname}`
+      poem.value = newData // Update the `poem` variable
+      authorsName.value =
+        `${newData.author?.name || ''} ${newData.author?.surname || ''}`.trim()
     },
-    { immediate: true, deep: true }
+    { immediate: true } // Trigger the watcher immediately with the current value
   )
 </script>

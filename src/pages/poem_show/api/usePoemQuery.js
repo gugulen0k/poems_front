@@ -9,8 +9,6 @@ const fetchPoem = async (poemId) => {
 }
 
 export function usePoemQuery(poemId) {
-  //const id = computed(() => poemId.value)
-
   const { data, isSuccess, isPending, isError, error } = useQuery({
     queryKey: [QUERY_KEY, poemId],
     queryFn: () => fetchPoem(poemId),
