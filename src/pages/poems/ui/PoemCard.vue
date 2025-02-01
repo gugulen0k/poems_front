@@ -25,7 +25,13 @@
             <FontAwesomeIcon :icon="faHeart" />
           </template>
         </Button>
-        <Button label="Read" class="flex-1" />
+
+        <Button
+          label="Read"
+          class="flex-1"
+          as="router-link"
+          :to="`poems/${poem.id}`"
+        />
       </div>
     </template>
   </Card>
