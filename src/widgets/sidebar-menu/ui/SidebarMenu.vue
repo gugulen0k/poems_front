@@ -63,7 +63,19 @@
         </Button>
       </div>
 
-      <Button :label="isOpen ? 'John Doe' : ''" class="text-lg" fluid>
+      <Avatar v-if="isAuthenticated" :image="user.avatar">
+        <template #icon>
+          <FontAwesomeIcon :icon="faUser" class="text-lg" />
+        </template>
+      </Avatar>
+      <Button
+        v-else
+        :label="isOpen ? 'Log In' : ''"
+        class="text-lg"
+        as="router-link"
+        to="/login"
+        fluid
+      >
         <template #icon>
           <FontAwesomeIcon :icon="faUser" class="text-lg" />
         </template>
@@ -82,6 +94,7 @@
     faUser,
   } from '@fortawesome/free-solid-svg-icons'
   import { useSidebarStore } from '@/shared/model/stores/useSidebarStore'
+  import { useAuthStore } from '@/shared/model/stores/useAuthStore'
   import { menuItems } from '@/shared/lib/menuItems'
 
   const sidebarStore = useSidebarStore()
@@ -90,4 +103,8 @@
   const updateSidebarState = (label) => {
     sidebarStore.setActiveItem(label)
   }
+
+  const authStore = useAuthStore()
+  const user = computed(() => authStore.user)
+  const isAuthenticated = computed(() => authStore.isAuthenticated)
 </script>

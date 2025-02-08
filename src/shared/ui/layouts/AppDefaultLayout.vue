@@ -5,10 +5,6 @@
     </nav>
 
     <main class="h-full flex flex-col gap-4 tablet:p-4 laptop:px-10">
-      <!--      <header class="max-h-fit">
-        <slot name="header"></slot>
-      </header>-->
-
       <section class="h-full">
         <slot name="content"></slot>
       </section>

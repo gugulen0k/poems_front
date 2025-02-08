@@ -2,6 +2,18 @@ export const routes = [
   {
     path: '/',
     name: 'Home',
+    children: [
+      {
+        path: '/login',
+        name: 'LogIn',
+        component: () => import('./log_in'),
+      },
+      {
+        path: '/signup',
+        name: 'SignUp',
+        component: () => import('./sign_up'),
+      },
+    ],
     redirect: { path: '/poems' },
   },
   {
