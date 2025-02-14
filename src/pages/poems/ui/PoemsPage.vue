@@ -1,7 +1,7 @@
 <template>
   <div
     v-motion-fade
-    class="w-full h-full flex flex-col bg-white tablet:rounded-xl"
+    class="w-full h-full flex flex-col bg-white shadow-sm tablet:rounded-xl"
   >
     <div class="m-4 mb-0 laptop:hidden">
       <MobileSidebarMenu v-model="mobileSidebarVisible" />

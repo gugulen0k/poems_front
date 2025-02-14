@@ -63,11 +63,26 @@
         </Button>
       </div>
 
-      <Avatar v-if="isAuthenticated" :image="user.avatar">
-        <template #icon>
-          <FontAwesomeIcon :icon="faUser" class="text-lg" />
-        </template>
-      </Avatar>
+      <Menu
+        id="user_menu"
+        ref="userMenu"
+        :model="userMenuItems"
+        :popup="true"
+      />
+      <Button
+        v-if="isAuthenticated"
+        class="flex items-center gap-4"
+        @click="toggle"
+      >
+        <Avatar
+          :image="user.avatar"
+          size="large"
+          class="rounded-full overflow-hidden"
+        />
+        <span v-if="isOpen" class="text-lg text-primary-50">{{
+          user.nickname
+        }}</span>
+      </Button>
       <Button
         v-else
         :label="isOpen ? 'Log In' : ''"
@@ -85,7 +100,7 @@
 </template>
 
 <script setup>
-  import { computed } from 'vue'
+  import { computed, ref } from 'vue'
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
   import {
     faArrowRight,
@@ -94,7 +109,7 @@
     faUser,
   } from '@fortawesome/free-solid-svg-icons'
   import { useSidebarStore } from '@/shared/model/stores/useSidebarStore'
-  import { useAuthStore } from '@/shared/model/stores/useAuthStore'
+  import { useUserStore } from '@/shared/model/stores/useUserStore'
   import { menuItems } from '@/shared/lib/menuItems'
 
   const sidebarStore = useSidebarStore()
@@ -104,7 +119,27 @@
     sidebarStore.setActiveItem(label)
   }
 
-  const authStore = useAuthStore()
-  const user = computed(() => authStore.user)
-  const isAuthenticated = computed(() => authStore.isAuthenticated)
+  const userStore = useUserStore()
+  const user = computed(() => userStore.user)
+  const isAuthenticated = computed(() => userStore.isAuthenticated)
+
+  const userMenu = ref()
+  const userMenuItems = ref([
+    {
+      label: 'Profile',
+      icon: 'pi pi-plus',
+      command: () => {},
+    },
+    {
+      label: 'Log Out',
+      icon: 'pi pi-search',
+      command: () => {
+        userStore.removeUserData()
+      },
+    },
+  ])
+
+  const toggle = (event) => {
+    userMenu.value.toggle(event)
+  }
 </script>

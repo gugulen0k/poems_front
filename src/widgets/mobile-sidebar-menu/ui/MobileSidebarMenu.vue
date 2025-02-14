@@ -49,6 +49,8 @@
             variant="text"
             severity="secondary"
             fluid
+            as="router-link"
+            to="/login"
           >
             <template #default>
               <FontAwesomeIcon :icon="faUser" />

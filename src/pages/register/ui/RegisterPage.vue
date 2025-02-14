@@ -3,7 +3,7 @@
     class="h-full px-10 bg-white shadow-sm flex flex-col justify-center tablet:h-max tablet:py-10 tablet:px-16 tablet:rounded-xl laptop:px-20 laptop:py-10"
   >
     <span class="text-primary-900 text-center text-4xl font-bold mb-10"
-      >Log In</span
+      >Register</span
     >
 
     <Message v-if="isError" severity="error" class="my-4">
@@ -20,13 +20,14 @@
       @submit.prevent="onFormSubmit"
       @keyup.enter.prevent="onFormSubmit"
     >
-      <Fluid class="flex flex-col gap-4">
+      <Fluid class="flex flex-col gap-4 tablet:grid tablet:grid-cols-2">
         <ValidatedInputText
           key="email"
           name="email"
           label="Email"
           type="email"
         />
+        <ValidatedInputText key="nickname" name="nickname" label="Nickname" />
         <ValidatedInputPassword
           key="password"
           name="password"
@@ -34,39 +35,38 @@
           :feedback="false"
           toggle-mask
         />
-
-        <Button label="Login" class="mt-4" type="submit" />
-
-        <Button
-          label="Forgot password?"
-          as="router-link"
-          to="/"
-          severity="secondary"
-          variant="link"
+        <ValidatedInputPassword
+          key="confirm_password"
+          name="confirm_password"
+          label="Confirm password"
+          :feedback="false"
+          toggle-mask
         />
+
+        <Button label="Sign Up" class="mt-4 col-span-2" type="submit" />
       </Fluid>
     </form>
 
-    <Divider align="center" type="solid" class="mb-8 mt-6">OR</Divider>
+    <Divider align="center" type="solid" class="my-8">OR</Divider>
 
     <div class="flex flex-col gap-4 justify-center">
-      <Button label="Log In with Google" variant="outlined">
+      <Button label="Sign up with Google" variant="outlined">
         <template #icon>
           <FontAwesomeIcon :icon="faGoogle"></FontAwesomeIcon>
         </template>
       </Button>
-      <Button label="Log In with GitHub" variant="outlined">
+      <Button label="Sign up with GitHub" variant="outlined">
         <template #icon>
           <FontAwesomeIcon :icon="faGithub"></FontAwesomeIcon>
         </template>
       </Button>
 
       <div class="flex items-center justify-center mt-8">
-        <span class="text-primary text-md"> Don't have an account yet? </span>
+        <span class="text-primary text-md">Already have an account?</span>
         <Button
-          label="Register"
+          label="Log In"
           as="router-link"
-          to="/register"
+          to="/login"
           variant="link"
           class="text-primary"
         />
@@ -77,11 +77,11 @@
 
 <script setup>
   import { ref } from 'vue'
-  import { object, string } from 'yup'
+  import { object, string, ref as yupRef } from 'yup'
   import { useForm } from 'vee-validate'
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
   import { faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons'
-  import { useUserMutation } from '../api/useUserMutation'
+  //import { useUserMutation } from '../api/useUserMutation'
   import {
     ValidatedInputPassword,
     ValidatedInputText,
@@ -94,8 +94,12 @@
   })
 
   const schema = object({
-    email: string().required().email(),
-    password: string().required().min(6),
+    email: string().required('* required').email(),
+    nickname: string().max(64),
+    password: string().required('* required').min(6),
+    confirm_password: string()
+      .required('* required')
+      .oneOf([yupRef('password')], 'Passwords must match'),
   })
 
   const { handleSubmit } = useForm({
@@ -103,9 +107,9 @@
     initialValues: initialValues,
   })
 
-  const { mutate: mutateUser, isError, error } = useUserMutation()
+  //const { mutate: mutateUser, isError, error } = useUserMutation()
 
   const onFormSubmit = handleSubmit((values) => {
-    mutateUser(values)
+    //mutateUser(values)
   })
 </script>
