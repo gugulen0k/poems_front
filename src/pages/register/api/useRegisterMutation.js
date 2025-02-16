@@ -1,19 +1,26 @@
-import { useQuery } from '@tanstack/vue-query'
-import { QUERY_KEY } from '../lib/constants.js'
-import PoemService from './services/PoemService.js'
+import { useMutation } from '@tanstack/vue-query'
+import { USER_MUTATION_KEY } from '@/shared/lib/constants.js'
+import { useUserStore } from '@/shared/model/stores/useUserStore'
+import { router } from '@/app/providers'
+import UserService from '@/shared/lib/services/UserService'
 
-const fetchPoem = async (poemId) => {
-  const response = await PoemService.fetchPoem(poemId)
+const register = async (values) => {
+  const response = await UserService.register(values)
 
   return response.data
 }
 
-export function usePoemQuery(poemId) {
-  const { data, isSuccess, isPending, isError, error } = useQuery({
-    queryKey: [QUERY_KEY, poemId],
-    queryFn: () => fetchPoem(poemId),
-    retry: 1,
+const userStore = useUserStore()
+
+export function useRegisterMutation() {
+  const { mutate, isPending, isSuccess, isError, error } = useMutation({
+    mutationKey: [USER_MUTATION_KEY],
+    mutationFn: (values) => register(values),
+    onSuccess: (data) => {
+      userStore.updateUserData(data.user)
+      router.replace({ path: '/' })
+    },
   })
 
-  return { data, isSuccess, isPending, isError, error }
+  return { mutate, isSuccess, isPending, isError, error }
 }

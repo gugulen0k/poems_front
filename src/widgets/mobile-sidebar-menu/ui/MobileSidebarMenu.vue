@@ -44,17 +44,47 @@
         </div>
 
         <div class="border-t mx-4 p-0">
+          <Menu
+            id="user_menu"
+            ref="userMenu"
+            :model="userMenuItems"
+            :popup="true"
+          />
           <Button
-            class="my-4 text-lg"
+            v-if="isAuthenticated"
+            class="my-4 flex items-center gap-4"
             variant="text"
-            severity="secondary"
             fluid
+            @click="toggle"
+          >
+            <Avatar
+              :image="user.avatar"
+              size="normal"
+              shape="circle"
+              class="bg-primary-100 ring-2 ring-primary-800"
+            >
+              <template v-if="!user.avatar" #icon>
+                <FontAwesomeIcon :icon="faUser" class="text-lg" />
+              </template>
+            </Avatar>
+
+            <span class="text-lg">{{
+              user.nickname.length >= 10
+                ? `${user.nickname.slice(0, 10)}...`
+                : user.nickname
+            }}</span>
+          </Button>
+          <Button
+            v-else
+            class="my-4 text-lg"
+            severity="secondary"
+            label="Log In"
             as="router-link"
             to="/login"
+            fluid
           >
-            <template #default>
-              <FontAwesomeIcon :icon="faUser" />
-              <span>John Doe</span>
+            <template #icon>
+              <FontAwesomeIcon :icon="faArrowRightToBracket" />
             </template>
           </Button>
         </div>
@@ -64,16 +94,45 @@
 </template>
 
 <script setup>
-  import { computed } from 'vue'
+  import { computed, ref } from 'vue'
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-  import { faScroll, faUser } from '@fortawesome/free-solid-svg-icons'
+  import {
+    faArrowRightToBracket,
+    faScroll,
+    faUser,
+  } from '@fortawesome/free-solid-svg-icons'
   import { useSidebarStore } from '@/shared/model/stores/useSidebarStore'
   import { menuItems } from '@/shared/lib/menuItems'
+  import { useUserStore } from '@/shared/model/stores/useUserStore'
 
   const visibility = defineModel()
   const sidebarStore = useSidebarStore()
   const activeItem = computed(() => sidebarStore.activeItem)
   const updateSidebarState = (label) => {
     sidebarStore.setActiveItem(label)
+  }
+
+  const userStore = useUserStore()
+  const user = computed(() => userStore.user)
+  const isAuthenticated = computed(() => userStore.isAuthenticated)
+
+  const userMenu = ref()
+  const userMenuItems = ref([
+    {
+      label: 'Profile',
+      icon: 'pi pi-plus',
+      command: () => {},
+    },
+    {
+      label: 'Log Out',
+      icon: 'pi pi-search',
+      command: () => {
+        userStore.removeUserData()
+      },
+    },
+  ])
+
+  const toggle = (event) => {
+    userMenu.value.toggle(event)
   }
 </script>

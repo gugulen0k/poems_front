@@ -63,12 +63,11 @@
         </Button>
       </div>
 
-      <Menu
-        id="user_menu"
-        ref="userMenu"
-        :model="userMenuItems"
-        :popup="true"
-      />
+      <Menu id="user_menu" ref="userMenu" :model="userMenuItems" :popup="true">
+        <template #itemicon="{ item }">
+          <FontAwesomeIcon :icon="item.icon" />
+        </template>
+      </Menu>
       <Button
         v-if="isAuthenticated"
         class="flex items-center gap-4"
@@ -77,10 +76,18 @@
         <Avatar
           :image="user.avatar"
           size="large"
-          class="rounded-full overflow-hidden"
-        />
+          shape="circle"
+          class="bg-primary-100 ring-2 ring-primary-800"
+        >
+          <template v-if="!user.avatar" #icon>
+            <FontAwesomeIcon :icon="faUser" class="text-lg" />
+          </template>
+        </Avatar>
+
         <span v-if="isOpen" class="text-lg text-primary-50">{{
-          user.nickname
+          user.nickname.length >= 10
+            ? `${user.nickname.slice(0, 10)}...`
+            : user.nickname
         }}</span>
       </Button>
       <Button
@@ -92,7 +99,7 @@
         fluid
       >
         <template #icon>
-          <FontAwesomeIcon :icon="faUser" class="text-lg" />
+          <FontAwesomeIcon :icon="faArrowRightToBracket" class="text-lg" />
         </template>
       </Button>
     </div>
@@ -107,6 +114,7 @@
     faArrowLeft,
     faScroll,
     faUser,
+    faArrowRightToBracket,
   } from '@fortawesome/free-solid-svg-icons'
   import { useSidebarStore } from '@/shared/model/stores/useSidebarStore'
   import { useUserStore } from '@/shared/model/stores/useUserStore'
@@ -127,12 +135,12 @@
   const userMenuItems = ref([
     {
       label: 'Profile',
-      icon: 'pi pi-plus',
+      icon: faUser,
       command: () => {},
     },
     {
       label: 'Log Out',
-      icon: 'pi pi-search',
+      icon: faArrowRightToBracket,
       command: () => {
         userStore.removeUserData()
       },

@@ -1,25 +1,25 @@
 <template>
   <div
-    class="h-full px-10 bg-white shadow-sm flex flex-col justify-center tablet:h-max tablet:py-10 tablet:px-16 tablet:rounded-xl laptop:px-20 laptop:py-10"
+    class="p-10 flex flex-col justify-center bg-transparent tablet:w-fit tablet:bg-white tablet:shadow-sm tablet:h-max tablet:py-10 tablet:px-16 tablet:rounded-xl laptop:px-20 laptop:py-10"
   >
     <span class="text-primary-900 text-center text-4xl font-bold mb-10"
       >Register</span
     >
 
-    <Message v-if="isError" severity="error" class="my-4">
-      <span v-for="error in error.response.data.errors">{{ error }}</span>
-
-      <template #icon>
-        <FontAwesomeIcon :icon="faCircleXmark" />
+    <Message
+      v-if="isError"
+      severity="error"
+      icon="pi pi-times-circle"
+      class="p-0 my-4"
+    >
+      <template #default>
+        <ul class="ml-2">
+          <li v-for="error in error.response.data.errors">{{ error }}</li>
+        </ul>
       </template>
     </Message>
 
-    <form
-      name="login"
-      class="flex flex-col"
-      @submit.prevent="onFormSubmit"
-      @keyup.enter.prevent="onFormSubmit"
-    >
+    <form name="login" class="flex flex-col" @submit.prevent="onFormSubmit">
       <Fluid class="flex flex-col gap-4 tablet:grid tablet:grid-cols-2">
         <ValidatedInputText
           key="email"
@@ -43,7 +43,12 @@
           toggle-mask
         />
 
-        <Button label="Sign Up" class="mt-4 col-span-2" type="submit" />
+        <Button
+          label="Sign Up"
+          class="mt-4 col-span-2"
+          type="submit"
+          :disabled="isPending"
+        />
       </Fluid>
     </form>
 
@@ -81,15 +86,15 @@
   import { useForm } from 'vee-validate'
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
   import { faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons'
-  //import { useUserMutation } from '../api/useUserMutation'
   import {
     ValidatedInputPassword,
     ValidatedInputText,
   } from '@/shared/ui/inputs'
-  import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
+  import { useRegisterMutation } from '../api/useRegisterMutation'
 
   const initialValues = ref({
     email: '',
+    nickname: '',
     password: '',
   })
 
@@ -107,9 +112,14 @@
     initialValues: initialValues,
   })
 
-  //const { mutate: mutateUser, isError, error } = useUserMutation()
+  const {
+    mutate: mutateRegisterUser,
+    isPending,
+    isError,
+    error,
+  } = useRegisterMutation()
 
   const onFormSubmit = handleSubmit((values) => {
-    //mutateUser(values)
+    mutateRegisterUser(values)
   })
 </script>

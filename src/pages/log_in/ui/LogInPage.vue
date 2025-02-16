@@ -1,12 +1,23 @@
 <template>
   <div
-    class="h-full px-10 bg-white shadow-sm flex flex-col justify-center tablet:h-max tablet:py-10 tablet:px-16 tablet:rounded-xl laptop:px-20 laptop:py-10"
+    class="p-10 h-max w-full flex flex-col justify-center tablet:bg-white tablet:shadow-sm tablet:h-max tablet:py-10 tablet:px-16 tablet:rounded-xl laptop:px-20 laptop:py-10"
   >
     <span class="text-primary-900 text-center text-4xl font-bold mb-10"
       >Log In</span
     >
 
-    <Message v-if="isError" severity="error" class="my-4">
+    <Message
+      v-if="isError && error.status === 500"
+      severity="error"
+      class="my-r"
+    >
+      Server is probably down, please try again later.
+
+      <template #icon>
+        <FontAwesomeIcon :icon="faCircleXmark" />
+      </template>
+    </Message>
+    <Message v-else-if="isError" severity="error" class="my-4">
       <span v-for="error in error.response.data.errors">{{ error }}</span>
 
       <template #icon>
@@ -35,7 +46,12 @@
           toggle-mask
         />
 
-        <Button label="Login" class="mt-4" type="submit" />
+        <Button
+          label="Login"
+          class="mt-4"
+          type="submit"
+          :disabled="isPending"
+        />
 
         <Button
           label="Forgot password?"
@@ -81,12 +97,12 @@
   import { useForm } from 'vee-validate'
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
   import { faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons'
-  import { useUserMutation } from '../api/useUserMutation'
+  import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
+  import { useLoginMutation } from '../api/useLoginMutation'
   import {
     ValidatedInputPassword,
     ValidatedInputText,
   } from '@/shared/ui/inputs'
-  import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 
   const initialValues = ref({
     email: '',
@@ -95,7 +111,7 @@
 
   const schema = object({
     email: string().required().email(),
-    password: string().required().min(6),
+    password: string().required(),
   })
 
   const { handleSubmit } = useForm({
@@ -103,9 +119,14 @@
     initialValues: initialValues,
   })
 
-  const { mutate: mutateUser, isError, error } = useUserMutation()
+  const {
+    mutate: mutateUserLogin,
+    isPending,
+    isError,
+    error,
+  } = useLoginMutation()
 
   const onFormSubmit = handleSubmit((values) => {
-    mutateUser(values)
+    mutateUserLogin(values)
   })
 </script>

@@ -59,6 +59,11 @@ export const routes = [
     ],
   },
   {
+    path: '/server_down',
+    name: 'ServerDown',
+    component: () => import('./server_down'),
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('./not_found'),
