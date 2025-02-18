@@ -1,4 +1,4 @@
-import axiosClient from '@/shared/api/axiosClient'
+import { axiosClient } from '@/shared/api/axiosClient'
 import { BASE_API_URL } from '@/shared/lib/constants'
 
 class PoemService {

@@ -40,7 +40,7 @@
 
               <div
                 v-else
-                class="w-40 h-40 border-4 border-primary-700 rounded-full bg-primary-100 flex justify-center items-center"
+                class="w-40 h-40 border-4 border-primary-700 rounded-full bg-primary-100 flex justify-center items-center shadow-lg"
               >
                 <FontAwesomeIcon
                   :icon="faUser"

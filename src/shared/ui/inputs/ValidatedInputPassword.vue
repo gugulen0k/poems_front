@@ -1,20 +1,22 @@
 <template>
   <div class="flex flex-col gap-2">
     <label :for="name" class="text-primary-800">{{ label }}</label>
-    <InputText
+    <Password
       v-bind="$attrs"
       v-model="value"
       autocomplete="off"
       variant="filled"
       :name="name"
     />
-    <span
-      v-if="errorMessage"
-      v-motion-fade-visible
-      class="text-red-500 text-sm"
-    >
-      {{ errorMessage }}
-    </span>
+    <div>
+      <span
+        v-if="errorMessage"
+        v-motion-fade-visible
+        class="text-red-500 text-sm"
+      >
+        {{ errorMessage }}
+      </span>
+    </div>
   </div>
 </template>
 

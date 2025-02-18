@@ -1,3 +1,3 @@
-import PoemShow from './ui/PoemShow.vue'
+import PoemShowPage from './ui/PoemShowPage.vue'
 
-export default PoemShow
+export default PoemShowPage

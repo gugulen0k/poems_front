@@ -1,19 +1,15 @@
 <template>
   <div class="h-full grid grid-cols-[max-content_1fr]">
     <nav>
-      <slot name="sidebar"></slot>
+      <SidebarMenu />
     </nav>
 
     <main class="h-full flex flex-col gap-4 tablet:p-4 laptop:px-10">
-      <!--      <header class="max-h-fit">
-        <slot name="header"></slot>
-      </header>-->
-
-      <section class="h-full">
-        <slot name="content"></slot>
-      </section>
+      <RouterView />
     </main>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+  import SidebarMenu from '@/widgets/sidebar-menu'
+</script>
