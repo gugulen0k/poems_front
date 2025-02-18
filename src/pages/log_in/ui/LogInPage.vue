@@ -25,12 +25,7 @@
       </template>
     </Message>
 
-    <form
-      name="login"
-      class="flex flex-col"
-      @submit.prevent="onFormSubmit"
-      @keyup.enter.prevent="onFormSubmit"
-    >
+    <form name="login" class="flex flex-col" @submit.prevent="onFormSubmit">
       <Fluid class="flex flex-col gap-4">
         <ValidatedInputText
           key="email"

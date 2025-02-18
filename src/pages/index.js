@@ -59,7 +59,7 @@ export const routes = [
     ],
   },
   {
-    path: '/server_down',
+    path: '/server-down',
     name: 'ServerDown',
     component: () => import('./server_down'),
   },
