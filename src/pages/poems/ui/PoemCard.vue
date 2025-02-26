@@ -9,7 +9,7 @@
       <div class="flex flex-col gap-4">
         <RouterLink
           v-if="poem.author.id"
-          :to="`author/${poem.author.id}`"
+          :to="`authors/${poem.author.id}`"
           class="w-max"
         >
           <div class="flex items-center gap-4 group">
@@ -28,12 +28,14 @@
             </div>
 
             <div class="flex flex-col text-primary-500">
-              <span class="text-lg group-hover:text-red-400">{{
-                poem.author.name
-              }}</span>
-              <span class="font-bold text-xl group-hover:text-red-400">{{
-                poem.author.surname
-              }}</span>
+              <span
+                class="text-lg group-hover:text-red-400 transition-colors"
+                >{{ poem.author.name }}</span
+              >
+              <span
+                class="font-bold text-xl group-hover:text-red-400 transition-colors"
+                >{{ poem.author.surname }}</span
+              >
             </div>
           </div>
         </RouterLink>
@@ -42,7 +44,9 @@
           poem.title
         }}</span>
 
-        <p class="whitespace-pre-wrap align-middle">{{ poem.short_text }}</p>
+        <p class="whitespace-pre-wrap align-middle text-primary-600">
+          {{ poem.short_text }}
+        </p>
       </div>
     </template>
 

@@ -21,10 +21,10 @@
 
           <div class="my-auto flex flex-col gap-4 px-4">
             <Button
-              v-for="item in menuItems"
+              v-for="item in menuItemsList"
               :key="item.label"
               :class="[
-                activeItem === item.label
+                activeItem === item.itemName
                   ? 'bg-primary-100 text-primary-800'
                   : '',
                 'transition-all ease-out duration-200',
@@ -34,7 +34,6 @@
               :label="item.label"
               as="router-link"
               fluid
-              @click="updateSidebarState(item.label)"
             >
               <template #icon>
                 <FontAwesomeIcon :icon="item.icon" class="text-xl" />
@@ -49,7 +48,11 @@
             ref="userMenu"
             :model="userMenuItems"
             :popup="true"
-          />
+          >
+            <template #itemicon="{ item }">
+              <FontAwesomeIcon :icon="item.icon" />
+            </template>
+          </Menu>
           <Button
             v-if="isAuthenticated"
             class="my-4 flex items-center gap-4"
@@ -97,35 +100,40 @@
   import { computed, ref } from 'vue'
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
   import {
+    faArrowRightFromBracket,
     faArrowRightToBracket,
     faScroll,
     faUser,
   } from '@fortawesome/free-solid-svg-icons'
   import { useSidebarStore } from '@/shared/model/stores/useSidebarStore'
-  import { menuItems } from '@/shared/lib/menuItems'
+  import { menuItems, authenticatedMenuItems } from '@/shared/lib/menuItems'
   import { useUserStore } from '@/shared/model/stores/useUserStore'
 
   const visibility = defineModel()
   const sidebarStore = useSidebarStore()
   const activeItem = computed(() => sidebarStore.activeItem)
-  const updateSidebarState = (label) => {
-    sidebarStore.setActiveItem(label)
-  }
 
   const userStore = useUserStore()
   const user = computed(() => userStore.user)
   const isAuthenticated = computed(() => userStore.isAuthenticated)
 
+  const menuItemsList = computed(() => {
+    if (isAuthenticated.value)
+      return [...menuItems.value, ...authenticatedMenuItems.value]
+
+    return menuItems.value
+  })
+
   const userMenu = ref()
   const userMenuItems = ref([
     {
       label: 'Profile',
-      icon: 'pi pi-plus',
+      icon: faUser,
       command: () => {},
     },
     {
       label: 'Log Out',
-      icon: 'pi pi-search',
+      icon: faArrowRightFromBracket,
       command: () => {
         userStore.removeUserData()
       },

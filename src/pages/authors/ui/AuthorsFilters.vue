@@ -2,7 +2,7 @@
   <div class="m-4 mb-0">
     <DesktopFiltersPanel
       :filters-list="filters"
-      :page-id="PAGE_ID"
+      :page-id="AUTHORS_PAGE_ID"
       :validation-schema="schema"
       :initial-values="initialValues"
     />
@@ -21,7 +21,7 @@
     <MobileFiltersPanel
       v-model="mobileFiltersVisible"
       :filters-list="filters"
-      :page-id="PAGE_ID"
+      :page-id="AUTHORS_PAGE_ID"
       :validation-schema="schema"
       :initial-values="initialValues"
     />
@@ -31,7 +31,7 @@
 <script setup>
   import { object, string } from 'yup'
   import { ref } from 'vue'
-  import { PAGE_ID } from '../lib/constants'
+  import { AUTHORS_PAGE_ID } from '@/shared/lib/constants'
   import { useFiltersStore } from '@/shared/model/stores/useFiltersStore'
   import StringUtils from '@/shared/lib/utils/string'
 
@@ -44,11 +44,6 @@
 
   const filters = [
     {
-      name: 'title',
-      label: 'Title',
-      type: 'text',
-    },
-    {
       name: 'author',
       label: 'Author',
       type: 'text',
@@ -56,22 +51,20 @@
   ]
 
   const initialValues = ref({
-    title: '',
     author: '',
   })
 
   const schema = object({
-    title: string(),
     author: string(),
   })
 
   const filtersStore = useFiltersStore()
   const appliedFilters = computed(() => {
-    return filtersStore.getFiltersState(PAGE_ID)
+    return filtersStore.getFiltersState(AUTHORS_PAGE_ID)
   })
 
   watch(
-    () => filtersStore.getFiltersState(PAGE_ID),
+    () => filtersStore.getFiltersState(AUTHORS_PAGE_ID),
     (filters) => {
       appliedFilters.value = { ...filters }
     }

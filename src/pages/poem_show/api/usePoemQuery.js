@@ -12,7 +12,6 @@ export function usePoemQuery(poemId) {
   const { data, isSuccess, isPending, isError, error } = useQuery({
     queryKey: [QUERY_KEY, poemId],
     queryFn: () => fetchPoem(poemId),
-    retry: 1,
   })
 
   return { data, isSuccess, isPending, isError, error }

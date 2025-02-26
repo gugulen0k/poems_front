@@ -3,7 +3,7 @@ import { BASE_API_URL } from '@/shared/lib/constants'
 
 class PoemService {
   async fetchPoem(poemId) {
-    return await axiosClient.get(`${BASE_API_URL}/poems/${poemId}`, {})
+    return await axiosClient.get(`${BASE_API_URL}/poems/${poemId}`)
   }
 }
 

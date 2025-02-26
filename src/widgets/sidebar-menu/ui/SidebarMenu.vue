@@ -30,10 +30,12 @@
 
       <div class="my-auto flex flex-col justify-center gap-4">
         <Button
-          v-for="item in menuItems"
+          v-for="item in menuItemsList"
           :key="item.label"
           :class="[
-            activeItem === item.label ? 'bg-primary-100 text-primary-800' : '',
+            activeItem === item.itemName
+              ? 'bg-primary-100 text-primary-800'
+              : '',
             isOpen ? 'flex justify-start w-full' : '',
             'transition-all ease-out duration-200',
           ]"
@@ -41,7 +43,6 @@
           :to="item.route"
           as="router-link"
           fluid
-          @click="updateSidebarState(item.label)"
         >
           <template #default>
             <div
@@ -115,21 +116,26 @@
     faScroll,
     faUser,
     faArrowRightToBracket,
+    faArrowRightFromBracket,
   } from '@fortawesome/free-solid-svg-icons'
   import { useSidebarStore } from '@/shared/model/stores/useSidebarStore'
   import { useUserStore } from '@/shared/model/stores/useUserStore'
-  import { menuItems } from '@/shared/lib/menuItems'
+  import { menuItems, authenticatedMenuItems } from '@/shared/lib/menuItems'
 
   const sidebarStore = useSidebarStore()
   const isOpen = computed(() => sidebarStore.isOpen)
   const activeItem = computed(() => sidebarStore.activeItem)
-  const updateSidebarState = (label) => {
-    sidebarStore.setActiveItem(label)
-  }
 
   const userStore = useUserStore()
   const user = computed(() => userStore.user)
   const isAuthenticated = computed(() => userStore.isAuthenticated)
+
+  const menuItemsList = computed(() => {
+    if (isAuthenticated.value)
+      return [...menuItems.value, ...authenticatedMenuItems.value]
+
+    return menuItems.value
+  })
 
   const userMenu = ref()
   const userMenuItems = ref([
@@ -140,7 +146,7 @@
     },
     {
       label: 'Log Out',
-      icon: faArrowRightToBracket,
+      icon: faArrowRightFromBracket,
       command: () => {
         userStore.removeUserData()
       },

@@ -22,7 +22,7 @@
 
     <div v-else class="relative h-full mx-4 mb-4">
       <ScrollPanel
-        class="absolute w-full h-full overflow-x-hidden top-0 left-0 tablet:left-2/4 tablet:-translate-x-2/4 laptop:left-1/2 laptop:-translate-x-1/2"
+        class="absolute w-full h-full overflow-hidden top-0 left-0 tablet:left-2/4 tablet:-translate-x-2/4 laptop:left-1/2 laptop:-translate-x-1/2"
         :dt="{ bar: { background: '{primary.500}' } }"
       >
         <div class="flex flex-col gap-6 px-4 pb-4">
@@ -48,9 +48,13 @@
                 />
               </div>
 
-              <span class="text-xl desktop:text-2xl italic text-primary-600">{{
-                authorsName
-              }}</span>
+              <div
+                class="flex gap-2 text-xl desktop:text-2xl italic text-primary-600"
+              >
+                <span>{{ poem.author.surname }}</span>
+                <span>{{ poem.author.name }}</span>
+                <span>{{ poem.author.patronymic }}</span>
+              </div>
             </div>
 
             <div
@@ -82,7 +86,7 @@
 
 <script setup>
   import { ref, watch } from 'vue'
-  import { useRoute, useRouter } from 'vue-router'
+  import { useRouter, useRoute } from 'vue-router'
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
   import {
     faBars,
@@ -94,15 +98,14 @@
   import { usePoemQuery } from '../api/usePoemQuery'
   import MobileSidebarMenu from '@/widgets/mobile-sidebar-menu'
 
-  const router = useRouter()
+  const mobileSidebarVisible = ref(false)
+
   const route = useRoute()
-  const { id } = route.params
+  const router = useRouter()
+  const poemId = ref(route.params.poemId)
 
   const poem = ref({})
-  const authorsName = ref('')
-  const { data, isPending } = usePoemQuery(id)
-
-  const mobileSidebarVisible = ref(false)
+  const { data, isPending, isError } = usePoemQuery(poemId.value)
 
   watch(
     () => data.value, // Watch the reactive `data.value`
@@ -110,9 +113,14 @@
       if (!newData) return // Safeguard for null or undefined data
 
       poem.value = newData // Update the `poem` variable
-      authorsName.value =
-        `${newData.author?.name || ''} ${newData.author?.surname || ''}`.trim()
     },
     { immediate: true } // Trigger the watcher immediately with the current value
+  )
+
+  watch(
+    () => isError.value,
+    (newValue) => {
+      if (newValue === true) router.replace({ path: '/not-found' })
+    }
   )
 </script>

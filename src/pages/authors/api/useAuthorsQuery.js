@@ -25,7 +25,6 @@ export function useAuthorsQuery(pagination, filters) {
     queryKey: [QUERY_KEY, currentPage, filters],
     queryFn: () =>
       fetchAuthors(currentPage.value, itemsPerPage.value, appliedFilters.value),
-    retry: 1,
   })
 
   return { data, isSuccess, isPending, isError, error }
