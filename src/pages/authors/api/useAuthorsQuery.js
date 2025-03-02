@@ -1,13 +1,13 @@
 import { computed } from 'vue'
 import { useQuery } from '@tanstack/vue-query'
 import { QUERY_KEY } from '../lib/constants.js'
-import PoemsService from './services/PoemsService.js'
 import ObjectUtils from '@/shared/lib/utils/object'
+import AuthorsService from './services/AuthorsService.js'
 
-const fetchPoems = async (page, itemsPerPage, filters) => {
+const fetchAuthors = async (page, itemsPerPage, filters) => {
   const apiFormattedFilters = ObjectUtils.convertKeysToSnakeCase(filters)
 
-  const response = await PoemsService.fetchPoems(
+  const response = await AuthorsService.fetchAuthors(
     page,
     itemsPerPage,
     apiFormattedFilters
@@ -16,7 +16,7 @@ const fetchPoems = async (page, itemsPerPage, filters) => {
   return response.data
 }
 
-export function usePoemsQuery(pagination, filters) {
+export function useAuthorsQuery(pagination, filters) {
   const currentPage = computed(() => pagination.value.page)
   const itemsPerPage = computed(() => pagination.value.itemsPerPage)
   const appliedFilters = computed(() => filters.value)
@@ -24,7 +24,7 @@ export function usePoemsQuery(pagination, filters) {
   const { data, isSuccess, isPending, isError, error } = useQuery({
     queryKey: [QUERY_KEY, currentPage, filters],
     queryFn: () =>
-      fetchPoems(currentPage.value, itemsPerPage.value, appliedFilters.value),
+      fetchAuthors(currentPage.value, itemsPerPage.value, appliedFilters.value),
   })
 
   return { data, isSuccess, isPending, isError, error }

@@ -7,8 +7,18 @@ import './index.scss'
 import { MyPreset, pinia, router } from './providers'
 import App from './App.vue'
 
+const queryPluginConfig = {
+  queryClientConfig: {
+    defaultOptions: {
+      queries: {
+        retry: false, // Disable retries globally
+      },
+    },
+  },
+}
+
 const app = createApp(App)
-  .use(VueQueryPlugin)
+  .use(VueQueryPlugin, queryPluginConfig)
   .use(router)
   .use(pinia)
   .use(MotionPlugin)

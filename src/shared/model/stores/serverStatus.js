@@ -2,10 +2,10 @@ import axios from 'axios'
 import { ref } from 'vue'
 import { API_STATUS_URL } from '@/shared/lib/constants'
 
-export const serverStatus = ref(true)
+export const isServerUp = ref(true)
 
 export const updateServerStatus = async () => {
-  serverStatus.value = await checkServerStatus()
+  isServerUp.value = await checkServerStatus()
 }
 
 export const checkServerStatus = async () => {

@@ -41,7 +41,7 @@
           :dt="{ bar: { background: '{primary.500}' } }"
         >
           <div
-            class="overflow-x-hidden flex flex-col gap-4 px-4 tablet:p-4 tablet:grid tablet:justify-center tablet:gap-8 tablet:grid-cols-[repeat(auto-fit,_minmax(30rem,_1fr))]"
+            class="overflow-x-hidden flex flex-col gap-4 px-4 tablet:p-4 tablet:grid tablet:justify-center tablet:gap-8 tablet:grid-cols-[repeat(auto-fit,_minmax(20rem,_28rem))]"
           >
             <PoemCard
               v-for="(item, index) in slotProps.items"
@@ -87,7 +87,7 @@
   import { computed, watch, ref } from 'vue'
   import { usePaginationStore } from '@/shared/model/stores/usePaginationStore'
   import { useFiltersStore } from '@/shared/model/stores/useFiltersStore'
-  import { PAGE_ID } from '../lib/constants'
+  import { POEMS_PAGE_ID } from '@/shared/lib/constants'
   import { usePoemsQuery } from '../api/usePoemsQuery'
   import {
     FontAwesomeIcon,
@@ -118,10 +118,10 @@
 
   const paginationStore = usePaginationStore()
   const paginationState = computed(() =>
-    paginationStore.paginationState(PAGE_ID)
+    paginationStore.paginationState(POEMS_PAGE_ID)
   )
   const updatePagination = (event) => {
-    paginationStore.updatePagination(PAGE_ID, {
+    paginationStore.updatePagination(POEMS_PAGE_ID, {
       currentPage: event.page + 1,
       startIndex: event.first,
       itemsPerPage: event.rows,
@@ -129,7 +129,9 @@
   }
 
   const filtersStore = useFiltersStore()
-  const appliedFilters = computed(() => filtersStore.getFiltersState(PAGE_ID))
+  const appliedFilters = computed(() =>
+    filtersStore.getFiltersState(POEMS_PAGE_ID)
+  )
 
   const poems = ref([])
   const meta = ref({})
