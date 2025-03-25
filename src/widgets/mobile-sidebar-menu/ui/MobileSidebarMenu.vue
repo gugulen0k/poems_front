@@ -9,13 +9,11 @@
               <span class="font-semibold text-2xl text-primary">VerseNest</span>
             </span>
             <span>
-              <Button
-                type="button"
-                icon="pi pi-times"
-                rounded
-                outlined
-                @click="closeCallback"
-              />
+              <Button type="button" rounded outlined @click="closeCallback">
+                <template #icon>
+                  <FontAwesomeIcon :icon="faTimes" />
+                </template>
+              </Button>
             </span>
           </div>
 
@@ -42,7 +40,7 @@
           </div>
         </div>
 
-        <div class="border-t mx-4 p-0">
+        <div class="border-t border-primary-800/20 mx-4 p-0">
           <Menu
             id="user_menu"
             ref="userMenu"
@@ -103,6 +101,7 @@
     faArrowRightFromBracket,
     faArrowRightToBracket,
     faScroll,
+    faTimes,
     faUser,
   } from '@fortawesome/free-solid-svg-icons'
   import { useSidebarStore } from '@/shared/model/stores/useSidebarStore'

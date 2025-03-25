@@ -41,7 +41,7 @@ router.beforeEach(async (to, _from) => {
     return { path: '/poems' }
   }
 
-  if (!isUserAuthenticated.value && to.path === '/favorite') {
+  if (!isUserAuthenticated.value && to.path === '/favorite_poems') {
     return { path: '/poems' }
   }
 
@@ -62,7 +62,7 @@ router.beforeEach(async (to, _from) => {
     case '/authors':
       sidebarStore.setActiveItem(MENU_ITEM_AUTHORS)
       break
-    case '/favorite':
+    case '/favorite_poems':
       sidebarStore.setActiveItem(MENU_ITEM_FAVORITE)
       break
     default:

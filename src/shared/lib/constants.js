@@ -8,6 +8,7 @@ export const DATE = 'date'
 // Page ids
 export const AUTHORS_PAGE_ID = 'authors'
 export const POEMS_PAGE_ID = 'poems'
+export const FAVORITE_POEMS_PAGE_ID = 'favorite_poems'
 
 // Menu item names
 export const MENU_ITEM_POEMS = 'all_poems'

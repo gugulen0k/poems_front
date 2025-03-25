@@ -9,7 +9,7 @@
         </template>
       </Button>
 
-      <Button class="laptop:hidden" @click="mobileSidebarVisible = true">
+      <Button class="laptop:hidden" @click="(mobileSidebarVisible = true)">
         <template #icon>
           <FontAwesomeIcon :icon="faBars" />
         </template>
@@ -27,20 +27,21 @@
       >
         <div class="flex flex-col gap-6 px-4 pb-4">
           <div class="flex flex-col gap-2 items-center">
-            <div
+            <RouterLink
               v-if="poem.author"
-              class="w-full flex flex-col items-center gap-4"
+              :to="`/authors/${poem.author.id}`"
+              class="flex flex-col items-center gap-4 group hover:cursor-pointer"
             >
               <div
                 v-if="poem.author.image"
-                class="border-4 border-primary-700 rounded-full w-40 h-40 overflow-hidden shadow-lg"
+                class="border-4 border-primary-700 rounded-full w-40 h-40 overflow-hidden shadow-lg transition-all duration-200 group-hover:border-red-400"
               >
                 <img :src="poem.author.image" class="w-max" />
               </div>
 
               <div
                 v-else
-                class="w-40 h-40 border-4 border-primary-700 rounded-full bg-primary-100 flex justify-center items-center shadow-lg"
+                class="w-40 h-40 border-4 border-primary-700 rounded-full bg-primary-100 flex justify-center items-center shadow-lg transition-all duration-200 group-hover:border-red-400"
               >
                 <FontAwesomeIcon
                   :icon="faUser"
@@ -49,13 +50,13 @@
               </div>
 
               <div
-                class="flex gap-2 text-xl desktop:text-2xl italic text-primary-600"
+                class="flex gap-2 text-xl italic text-primary-600 transition-all duration-200 group-hover:text-red-400 desktop:text-2xl"
               >
                 <span>{{ poem.author.surname }}</span>
                 <span>{{ poem.author.name }}</span>
                 <span>{{ poem.author.patronymic }}</span>
               </div>
-            </div>
+            </RouterLink>
 
             <div
               class="mt-10 text-primary-950 text-2xl desktop:text-3xl text-center font-bold"
@@ -63,9 +64,11 @@
               {{ poem.title }}
             </div>
             <div
-              class="mt-4 whitespace-pre-wrap text-primary-900 text-xl desktop:text-2xl"
+              class="w-1/2 flex justify-center mt-4 whitespace-pre-wrap text-primary-900 text-xl desktop:text-2xl"
             >
-              {{ poem.text }}
+              <p>
+                {{ poem.text }}
+              </p>
             </div>
             <div
               v-if="poem.released"

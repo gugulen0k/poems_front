@@ -1,7 +1,7 @@
 <template>
   <RouterLink :to="`/poems/${poem.id}`">
     <Card
-      class="h-full bg-primary-50 border shadow-sm transition-all hover:shadow-md hover:scale-[1.01]"
+      class="h-full bg-primary-50 border border-primary-800/20 shadow-xs transition-all duration-200 hover:shadow-sm hover:border-primary-800"
     >
       <template #title>
         <span class="font-bold text-primary-700">
@@ -14,7 +14,9 @@
       </template>
 
       <template #content>
-        <p class="whitespace-pre-wrap text-primary-600 text-lg">
+        <p
+          class="whitespace-pre-wrap text-primary-600 text-lg max-h-20 overflow-y-hidden"
+        >
           {{ poem.text }}
         </p>
       </template>

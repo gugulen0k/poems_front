@@ -1,7 +1,7 @@
 <template>
   <RouterLink :to="`authors/${author.id}`">
     <div
-      class="relative min-h-64 h-full overflow-hidden rounded-lg bg-primary-50 border"
+      class="relative min-h-[21rem] h-full overflow-hidden rounded-lg bg-primary-50 border border-primary-800/20 hover:border-primary-800 duration-200 transition-all"
     >
       <img
         v-if="author.image"

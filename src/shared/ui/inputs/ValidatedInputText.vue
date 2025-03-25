@@ -8,6 +8,9 @@
       variant="filled"
       :name="name"
     />
+    <Message size="small" severity="secondary" variant="simple">{{
+      helpMessage
+    }}</Message>
     <span
       v-if="errorMessage"
       v-motion-fade-visible
@@ -28,6 +31,10 @@
     },
     label: {
       required: true,
+      type: String,
+    },
+    helpMessage: {
+      required: false,
       type: String,
     },
   })

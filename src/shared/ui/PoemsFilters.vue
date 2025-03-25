@@ -7,11 +7,11 @@
       :initial-values="initialValues"
     />
 
-    <div class="flex gap-2 justify-center">
+    <div class="flex flex-col gap-2 justify-center tablet:flex-row">
       <div v-for="(value, filterName) in appliedFilters" :key="filterName">
         <Chip
           v-if="value"
-          class="rounded-md py-1 border border-primary-200 bg-none"
+          class="w-full rounded-md py-1 border border-primary-200 bg-none tablet:w-max"
         >
           {{ StringUtils.camelToFlat(filterName).trim() }}: {{ value }}
         </Chip>
@@ -51,11 +51,17 @@
       name: 'text',
       label: 'Text',
       type: 'text',
+      componentAttrs: {
+        helpMessage: "Input part of the poem's text",
+      },
     },
     {
       name: 'author',
       label: 'Author',
       type: 'text',
+      componentAttrs: {
+        helpMessage: "Input author's name, surname, patronymic",
+      },
     },
   ]
 

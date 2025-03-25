@@ -47,6 +47,9 @@
       name: 'author',
       label: 'Author',
       type: 'text',
+      componentAttrs: {
+        helpMessage: "Input author's name, surname, patronymic",
+      },
     },
   ]
 

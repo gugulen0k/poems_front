@@ -3,7 +3,7 @@
     pt:content:class="h-full flex flex-col justify-center"
     pt:root:class="flex-row"
     pt:body:class="w-full"
-    class="border shadow-sm bg-primary-50"
+    class="border border-primary-800/20 shadow-xs bg-primary-50"
   >
     <template #content>
       <div class="flex flex-col gap-4">
@@ -15,14 +15,14 @@
           <div class="flex items-center gap-4 group">
             <div
               v-if="poem.author.image"
-              class="flex-shrink-0 border-2 border-primary-700 rounded-full w-16 h-16 overflow-hidden shadow-lg"
+              class="shrink-0 border-2 border-primary-700 rounded-full w-16 h-16 overflow-hidden shadow-md"
             >
               <img :src="poem.author.image" class="w-max" />
             </div>
 
             <div
               v-else
-              class="flex-shrink-0 bg-primary-100 flex justify-center items-center border-2 border-primary-700 rounded-full w-16 h-16 overflow-hidden shadow-lg"
+              class="shrink-0 bg-primary-100 flex justify-center items-center border-2 border-primary-700 rounded-full w-16 h-16 overflow-hidden shadow-md"
             >
               <FontAwesomeIcon :icon="faUser" class="text-xl" />
             </div>

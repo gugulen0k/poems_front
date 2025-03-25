@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Geologica:wght@100..900&display=swap');
+
+@import "tailwindcss";
+@import "tailwindcss-primeui";
+@config "../../tailwind.config.cjs";
+
+
+:root {
+  --surface-ground: var(--p-slate-300);
+}
+
+:root[class*='dark-theme-enabled'] {
+  --surface-ground: var(--p-zinc-950);
+}
+
+html {
+  font-size: 14px;
+}
+
+body {
+  background: var(--surface-ground);
+}
+
+* {
+  font-family: 'Geologica', 'Trebuchet MS', Helvetica, sans-serif;
+}

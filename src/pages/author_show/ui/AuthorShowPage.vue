@@ -3,7 +3,7 @@
     <MobileSidebarMenu v-model="mobileSidebarVisible" />
 
     <div class="p-4 sticky flex justify-end">
-      <Button class="laptop:hidden" @click="mobileSidebarVisible = true">
+      <Button class="laptop:hidden" @click="(mobileSidebarVisible = true)">
         <template #icon>
           <FontAwesomeIcon :icon="faBars" />
         </template>
@@ -85,12 +85,12 @@
               text
               @click="updatePoemsFilter"
             >
-              <span>Authors poems</span>
+              <span>Author's poems</span>
               <FontAwesomeIcon :icon="faChevronRight" />
             </Button>
 
             <div
-              class="flex flex-col gap-4 tablet:grid tablet:gap-4 tablet:items-start tablet:justify-center tablet:grid-cols-[repeat(auto-fit,_minmax(22rem,_28rem))]"
+              class="flex flex-col gap-4 tablet:grid tablet:gap-4 tablet:justify-center tablet:grid-cols-[repeat(2,_minmax(22rem,_28rem))]"
             >
               <AuthorsPoemCard v-for="poem in author.poems" :poem="poem" />
             </div>

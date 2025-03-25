@@ -7,13 +7,13 @@
       <MobileSidebarMenu v-model="mobileSidebarVisible" />
 
       <div class="flex justify-between px-2">
-        <Button @click="mobileFiltersVisible = true">
+        <Button @click="(mobileFiltersVisible = true)">
           <template #icon>
             <FontAwesomeIcon :icon="faFilter" />
           </template>
         </Button>
 
-        <Button @click="mobileSidebarVisible = true">
+        <Button @click="(mobileSidebarVisible = true)">
           <template #icon>
             <FontAwesomeIcon :icon="faBars" />
           </template>
@@ -41,7 +41,7 @@
           :dt="{ bar: { background: '{primary.500}' } }"
         >
           <div
-            class="overflow-x-hidden flex flex-col gap-4 px-4 tablet:p-4 tablet:grid tablet:justify-center tablet:gap-8 tablet:grid-cols-[repeat(auto-fit,_minmax(20rem,_28rem))]"
+            class="overflow-x-hidden flex flex-col gap-4 px-4 py-2 tablet:p-4 tablet:grid tablet:justify-center tablet:gap-8 tablet:grid-cols-[repeat(auto-fit,_minmax(20rem,_28rem))]"
           >
             <PoemCard
               v-for="(item, index) in slotProps.items"
@@ -100,9 +100,9 @@
     faBars,
   } from '@fortawesome/free-solid-svg-icons'
 
-  import PoemCard from './PoemCard.vue'
+  import PoemCard from '@/shared/ui/PoemCard.vue'
+  import PoemsFilters from '@/shared/ui/PoemsFilters.vue'
   import MobileSidebarMenu from '@/widgets/mobile-sidebar-menu'
-  import PoemsFilters from './PoemsFilters.vue'
 
   const dataViewPassThroughOpts = {
     header: {

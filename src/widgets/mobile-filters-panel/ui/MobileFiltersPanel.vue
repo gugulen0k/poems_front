@@ -10,7 +10,7 @@
         :page-id="pageId"
       />
 
-      <div class="mt-auto flex gap-4 flex-shrink-0">
+      <div class="mt-auto flex gap-4 shrink-0">
         <Button
           class="text-lg"
           variant="outlined"

@@ -35,7 +35,7 @@ export const authenticatedMenuItems = ref([
   {
     label: 'Favorite Poems',
     itemName: MENU_ITEM_FAVORITE,
-    route: '/favorite',
+    route: '/favorite_poems',
     icon: faHeart,
   },
 ])

@@ -7,13 +7,13 @@
       <MobileSidebarMenu v-model="mobileSidebarVisible" />
 
       <div class="flex justify-between px-2">
-        <Button @click="(mobileFiltersVisible = true)">
+        <Button @click="mobileFiltersVisible = true">
           <template #icon>
             <FontAwesomeIcon :icon="faFilter" />
           </template>
         </Button>
 
-        <Button @click="(mobileSidebarVisible = true)">
+        <Button @click="mobileSidebarVisible = true">
           <template #icon>
             <FontAwesomeIcon :icon="faBars" />
           </template>
@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <AuthorsFilters v-model="mobileFiltersVisible" />
+    <PoemsFilters v-model="mobileFiltersVisible" />
 
     <div v-if="isPending" class="flex justify-center">
       <ProgressSpinner />
@@ -29,7 +29,7 @@
 
     <DataView
       v-else
-      :value="authors"
+      :value="poems"
       :pt="dataViewPassThroughOpts"
       class="relative h-full my-4 mx-2"
       layout="grid"
@@ -41,13 +41,13 @@
           :dt="{ bar: { background: '{primary.500}' } }"
         >
           <div
-            class="overflow-x-hidden gap-4 px-4 tablet:p-4 grid justify-center grid-cols-2 tablet:gap-8 tablet:grid-cols-[repeat(3,_minmax(10rem,_15rem))] desktop:grid-cols-[repeat(4,_minmax(13rem,_15rem))]"
+            class="overflow-x-hidden flex flex-col gap-4 px-4 tablet:p-4 tablet:grid tablet:justify-center tablet:gap-8 tablet:grid-cols-[repeat(auto-fit,_minmax(20rem,_28rem))]"
           >
-            <AuthorCard
+            <PoemCard
               v-for="(item, index) in slotProps.items"
               :key="item.id"
               v-motion
-              :author="item"
+              :poem="item"
               :initial="{ opacity: 0, x: 20 }"
               :enter="{ opacity: 1, x: 0 }"
               :delay="(index / 2) * 100"
@@ -68,7 +68,7 @@
             />
           </FontAwesomeLayers>
 
-          <span class="text-6xl font-bold text-primary-500">No Authors</span>
+          <span class="text-6xl font-bold text-primary-500">No Poems</span>
         </div>
       </template>
     </DataView>
@@ -85,10 +85,12 @@
 
 <script setup>
   import { computed, watch, ref } from 'vue'
+  import { useRouter } from 'vue-router'
   import { usePaginationStore } from '@/shared/model/stores/usePaginationStore'
   import { useFiltersStore } from '@/shared/model/stores/useFiltersStore'
-  import { AUTHORS_PAGE_ID } from '@/shared/lib/constants'
-  import { useAuthorsQuery } from '../api/useAuthorsQuery'
+  import { useUserStore } from '@/shared/model/stores/useUserStore'
+  import { FAVORITE_POEMS_PAGE_ID } from '@/shared/lib/constants'
+  import { useFavoritePoemsQuery } from '../api/useFavoritePoemsQuery'
   import {
     FontAwesomeIcon,
     FontAwesomeLayers,
@@ -100,9 +102,9 @@
     faBars,
   } from '@fortawesome/free-solid-svg-icons'
 
-  import AuthorCard from './AuthorCard.vue'
+  import PoemCard from '@/shared/ui/PoemCard.vue'
+  import PoemsFilters from '@/shared/ui/PoemsFilters.vue'
   import MobileSidebarMenu from '@/widgets/mobile-sidebar-menu'
-  import AuthorsFilters from './AuthorsFilters.vue'
 
   const dataViewPassThroughOpts = {
     header: {
@@ -118,33 +120,48 @@
 
   const paginationStore = usePaginationStore()
   const paginationState = computed(() =>
-    paginationStore.paginationState(AUTHORS_PAGE_ID)
+    paginationStore.paginationState(FAVORITE_POEMS_PAGE_ID)
   )
   const updatePagination = (event) => {
-    paginationStore.updatePagination(AUTHORS_PAGE_ID, {
+    paginationStore.updatePagination(FAVORITE_POEMS_PAGE_ID, {
       currentPage: event.page + 1,
       startIndex: event.first,
       itemsPerPage: event.rows,
     })
   }
 
+  const router = useRouter()
+
+  const userStore = useUserStore()
+
   const filtersStore = useFiltersStore()
   const appliedFilters = computed(() =>
-    filtersStore.getFiltersState(AUTHORS_PAGE_ID)
+    filtersStore.getFiltersState(FAVORITE_POEMS_PAGE_ID)
   )
 
-  const authors = ref([])
+  const poems = ref([])
   const meta = ref({})
-  const { data, isPending } = useAuthorsQuery(paginationState, appliedFilters)
+  const { data, isPending, error } = useFavoritePoemsQuery(
+    paginationState,
+    appliedFilters
+  )
 
   watch(
     data,
     (currentData) => {
       if (!data.value) return
 
-      authors.value = currentData.data
+      poems.value = currentData.data
       meta.value = currentData.meta
     },
     { immediate: true, deep: true }
   )
+
+  watch(error, (currentError) => {
+    if (currentError.status === 401) {
+      console.log(currentError.message)
+      //userStore.removeUserData()
+      //router.replace({ path: '/poems' })
+    }
+  })
 </script>

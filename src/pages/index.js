@@ -9,12 +9,12 @@ export const routes = [
       {
         path: '/login',
         name: 'Login',
-        component: () => import('./log_in'), // Use named view 'authentication'
+        component: () => import('./log_in'),
       },
       {
         path: '/register',
         name: 'Register',
-        component: () => import('./register'), // Use named view 'authentication'
+        component: () => import('./register'),
       },
     ],
   },
@@ -25,7 +25,7 @@ export const routes = [
       {
         path: '/poems',
         name: 'Poems',
-        component: () => import('./poems'), // Nested under AppDefaultLayout
+        component: () => import('./poems'),
         alias: '/',
       },
       {
@@ -36,12 +36,17 @@ export const routes = [
       {
         path: '/authors',
         name: 'Authors',
-        component: () => import('./authors'), // Nested under AppDefaultLayout
+        component: () => import('./authors'),
       },
       {
         path: '/authors/:authorId(\\d+)',
         name: 'Author',
-        component: () => import('./author_show'), // Nested under AppDefaultLayout
+        component: () => import('./author_show'),
+      },
+      {
+        path: '/favorite_poems',
+        name: 'FavoritePoems',
+        component: () => import('./favorite_poems'),
       },
     ],
   },
