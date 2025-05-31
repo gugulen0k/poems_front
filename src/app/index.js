@@ -3,7 +3,7 @@ import { VueQueryPlugin } from '@tanstack/vue-query'
 import { MotionPlugin } from '@vueuse/motion'
 import PrimeVue from 'primevue/config'
 
-import './index.scss'
+import './index.css'
 import { MyPreset, pinia, router } from './providers'
 import App from './App.vue'
 
@@ -29,7 +29,7 @@ const app = createApp(App)
         darkModeSelector: '.dark-theme-enabled',
         cssLayer: {
           name: 'primevue',
-          order: 'tailwind-base, primevue, tailwind-utilities',
+          order: 'theme, base, primevue',
         },
       },
     },

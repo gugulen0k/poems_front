@@ -1,0 +1,32 @@
+@import "tailwindcss";
+@import "tailwindcss-primeui";
+@custom-variant dark (&:where(.my-app-dark, .my-app-dark *));
+/* dark mode configuration */
+
+@import 'primeicons/primeicons.css';
+
+@theme {
+  --breakpoint-tablet: 640px;
+  --breakpoint-laptop: 1024px;
+  --breakpoint-desktop: 1280px;
+}
+
+:root {
+  --surface-ground: var(--p-slate-300);
+}
+
+:root[class*='dark-theme-enabled'] {
+  --surface-ground: var(--p-zinc-950);
+}
+
+html {
+  font-size: 14px;
+}
+
+body {
+  background: var(--surface-ground);
+}
+
+* {
+  font-family: 'Geologica';
+}
